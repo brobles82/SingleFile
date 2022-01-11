@@ -202,9 +202,6 @@ const woleetKeyInput = document.getElementById('woleetKeyInput')
 const saveToGDriveInput = document.getElementById('saveToGDriveInput')
 const saveToGitHubInput = document.getElementById('saveToGitHubInput')
 const githubTokenInput = document.getElementById('githubTokenInput')
-const githubUserInput = document.getElementById('githubUserInput')
-const githubRepositoryInput = document.getElementById('githubRepositoryInput')
-const githubBranchInput = document.getElementById('githubBranchInput')
 const saveWithCompanionInput = document.getElementById('saveWithCompanionInput')
 const saveToFilesystemInput = document.getElementById('saveToFilesystemInput')
 const compressHTMLInput = document.getElementById('compressHTMLInput')
@@ -1162,12 +1159,6 @@ async function refresh(profileName) {
   saveToGitHubInput.checked = profileOptions.saveToGitHub
   githubTokenInput.value = profileOptions.githubToken
   githubTokenInput.disabled = !profileOptions.saveToGitHub
-  githubUserInput.value = profileOptions.githubUser
-  githubUserInput.disabled = !profileOptions.saveToGitHub
-  githubRepositoryInput.value = profileOptions.githubRepository
-  githubRepositoryInput.disabled = !profileOptions.saveToGitHub
-  githubBranchInput.value = profileOptions.githubBranch
-  githubBranchInput.disabled = !profileOptions.saveToGitHub
   saveWithCompanionInput.checked = profileOptions.saveWithCompanion
   saveToFilesystemInput.checked =
     !profileOptions.saveToGDrive &&
@@ -1277,9 +1268,6 @@ async function update() {
       saveToGDrive: saveToGDriveInput.checked,
       saveToGitHub: saveToGitHubInput.checked,
       githubToken: githubTokenInput.value,
-      githubUser: githubUserInput.value,
-      githubRepository: githubRepositoryInput.value,
-      githubBranch: githubBranchInput.value,
       saveWithCompanion: saveWithCompanionInput.checked,
       compressHTML: compressHTMLInput.checked,
       compressCSS: compressCSSInput.checked,

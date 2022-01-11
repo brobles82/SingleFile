@@ -52,14 +52,17 @@ async function pushGitHub(token, url, title, content) {
         content: content,
       }
 
-      const response = await fetch(`http://localhost:3000/api/v1/sfile`, {
-        method: 'POST',
-        body: JSON.stringify(web),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `token ${token}`,
-        },
-      })
+      const response = await fetch(
+        `https://arkwsites.com/arkwebsites/api/v1/sfile`,
+        {
+          method: 'POST',
+          body: JSON.stringify(web),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `token ${token}`,
+          },
+        }
+      )
       const responseData = await response.json()
       if (response.status < 400) {
         return responseData
