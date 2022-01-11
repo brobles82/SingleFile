@@ -34,7 +34,7 @@ const EDITOR_URL = browser.runtime.getURL(EDITOR_PAGE_URL)
 export { onMessage, onTabRemoved, isEditor, open, EDITOR_URL }
 
 async function open({ tabIndex, content, filename }) {
-  const createTabProperties = { active: true, url: tab.url }
+  const createTabProperties = { active: true, url: EDITOR_URL }
   if (tabIndex != null) {
     createTabProperties.index = tabIndex
   }

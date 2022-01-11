@@ -49,6 +49,7 @@ const requestPermissionIdentity =
   manifest.optional_permissions &&
   manifest.optional_permissions.includes('identity')
 const gDrive = new GDrive(CLIENT_ID, SCOPES)
+let originalUrl
 
 export { onMessage, downloadPage, saveToGDrive, saveToGitHub }
 
@@ -110,6 +111,7 @@ async function downloadTabPage(message, tab) {
   if (!message.truncated || message.finished) {
     if (message.openEditor) {
       ui.onEdit(tab.id)
+      originalUrl = tab.url
       await editor.open({
         tabIndex: tab.index + 1,
         filename: message.filename,
@@ -147,13 +149,14 @@ async function downloadContent(contents, tab, incognito, message) {
         )
       ).uploadPromise
     } else if (message.saveToGitHub) {
+      let customUrl = editor.isEditor(tab) ? originalUrl : tab.url
       await (
         await saveToGitHub(
           message.taskId,
           message.filename,
           contents.join(''),
           message.githubToken,
-          tab.url
+          customUrl
         )
       ).pushPromise
     } else if (message.saveWithCompanion) {
