@@ -1,6 +1,7 @@
 # SingleFile (ArkWSites version)
 
-This is a modified version of SingleFile for integrate with arkWsites
+This is a modified version of SingleFile for integrate with arkWsites.
+
 SingleFile is a Web Extension (and a CLI tool) compatible with Chrome, Firefox (Desktop and Mobile), Microsoft Edge, Vivaldi, Brave, Waterfox, Yandex browser, and Opera. It helps you to save a complete web page into a single HTML file.
 
 ## Table of Contents
