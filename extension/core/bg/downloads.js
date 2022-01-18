@@ -194,6 +194,9 @@ async function downloadContent(contents, tab, incognito, message) {
       ui.onError(tab.id, error.message, error.link)
     }
   } finally {
+    if (editor.isEditor(tab)) {
+      chrome.tabs.remove(tab.id, function () {})
+    }
     if (message.url) {
       URL.revokeObjectURL(message.url)
     }
