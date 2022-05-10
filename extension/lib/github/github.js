@@ -23,26 +23,26 @@
 
 /* global fetch, btoa, AbortController */
 
-export { pushGitHub }
+export { pushGitHub };
 
-let pendingPush
+let pendingPush;
 
 async function pushGitHub(token, url, title, content) {
   while (pendingPush) {
-    await pendingPush
+    await pendingPush;
   }
-  const controller = new AbortController()
+  const controller = new AbortController();
   pendingPush = (async () => {
     try {
-      await createContent({ url, content }, controller.signal)
+      await createContent({ url, content }, controller.signal);
     } finally {
-      pendingPush = null
+      pendingPush = null;
     }
-  })()
+  })();
   return {
     cancelPush: () => controller.abort(),
     pushPromise: pendingPush,
-  }
+  };
 
   async function createContent({ url, content }) {
     try {
@@ -50,25 +50,48 @@ async function pushGitHub(token, url, title, content) {
         title: title,
         url: url,
         content: content,
-      }
+        token: token,
+      };
 
-      const response = await fetch(`https://arkwsites.com/api/v1/sfile`, {
-        method: 'POST',
+      // // const response = await fetch(`http://localhost:3000/api/v1/sfile`, {
+
+      const endpointUrl = "http://localhost:3000/api/arkwebsite-creation";
+
+      const response = await fetch(endpointUrl, {
+        //  const response = await fetch(`https://arkwsites.com/api/v1/sfile`, {
+        method: "POST",
         body: JSON.stringify(web),
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `token ${token}`,
+          "Content-Type": "application/json",
+          //  Authorization: `token ${token}`,
         },
-      })
-      const responseData = await response.json()
+      });
+
+      // let formData = new FormData();
+      // formData.append("name", title);
+      // formData.append("url", url);
+      // formData.append("content", content);
+      // formData.append("token", token);
+
+      // const response = await fetch(
+      //   "http://192.168.1.140:3000/api/arkwebsite-creation",
+      //   {
+      //     body: formData,
+      //     method: "post",
+      //   }
+      // );
+
+      const responseData = await response.json();
+      // const responseData2 = await response2.json();
+
       if (response.status < 400) {
-        return responseData
+        return responseData;
       } else {
-        throw new Error(responseData.message)
+        throw new Error(responseData.message);
       }
     } catch (error) {
-      if (error.name != 'AbortError') {
-        throw error
+      if (error.name != "AbortError") {
+        throw error;
       }
     }
   }

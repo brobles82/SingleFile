@@ -69,3 +69,8 @@ This version can only be isntaled manually. !!
 - You can use the customizable shortkey Ctrl+Shift+Y to save the current tab or the selected tabs. Go to about:addons and select "Manage extension shortcuts" in the cogwheel menu to change it in Firefox. Go to chrome://extensions/shortcuts to change it in Chrome.
 - The default save folder is the download folder configured in your browser, cf. about:addons in Firefox and chrome://settings in Chrome.
 - See the extension help in the options page for more detailed information about the options and technical notes.
+
+Note branch for remix -> remixapp
+
+For do the builds
+npx rollup -c rollup.config.dev.js
