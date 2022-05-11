@@ -11,15 +11,21 @@
   <body>
     <main>
       <h3>
-        <span class="options-title">
+        Set the token here
+
+        <label for="githubTokenInput" id="githubTokenLabel"></label>
+        <input type="text" id="githubTokenInput" class="medium-input" />
+
+        <span class="options-title" style="display: none;">
           <span id="expandAllButton"></span>
           <span id="titleLabel"></span>
-          <a href="options.html#" target="_blank" class="new-window-link"
-            ><img
+          <a href="options.html#" target="_blank" class="new-window-link">
+            <img
               src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg=="
-          /></a>
+            />
+          </a>
         </span>
-        <span class="profiles">
+        <span class="profiles" style="display: none;">
           <select id="profileNamesInput"></select>
           <button id="addProfileButton">
             <img src="../resources/button_new.png" />
@@ -32,7 +38,7 @@
           </button>
         </span>
       </h3>
-      <details>
+      <details style="display: none;">
         <summary id="userInterfaceLabel"></summary>
         <div class="option">
           <label for="contextMenuEnabledInput" id="addMenuEntryLabel"></label>
@@ -63,7 +69,7 @@
           <input type="checkbox" id="autoCloseInput" />
         </div>
       </details>
-      <details>
+      <details style="display: none;">
         <summary id="filenameLabel"></summary>
         <div class="option vertical">
           <label for="filenameTemplateInput" id="filenameTemplateLabel"></label>
@@ -102,7 +108,7 @@
           </select>
         </div>
       </details>
-      <details>
+      <details style="display: none;">
         <summary id="htmlContentLabel"></summary>
         <div class="option">
           <label for="compressHTMLInput" id="compressHTMLLabel"></label>
@@ -147,7 +153,8 @@
           <input type="checkbox" id="saveRawPageInput" />
         </div>
       </details>
-      <details>
+
+      <details style="display: none;">
         <summary id="stylesheetsLabel"></summary>
         <div class="option">
           <label
@@ -172,7 +179,8 @@
           <input type="checkbox" id="moveStylesInHeadInput" />
         </div>
       </details>
-      <details>
+
+      <details style="display: none;">
         <summary id="imagesLabel"></summary>
         <div class="option">
           <label
@@ -215,7 +223,8 @@
           <input type="checkbox" id="removeAlternativeImagesInput" />
         </div>
       </details>
-      <details>
+
+      <details style="display: none;">
         <summary id="fontsLabel"></summary>
         <div class="option">
           <label
@@ -232,7 +241,8 @@
           <input type="checkbox" id="removeAlternativeFontsInput" />
         </div>
       </details>
-      <details>
+
+      <details style="display: none;">
         <summary id="otherResourcesLabel"></summary>
         <div class="option">
           <label for="removeScriptsInput" id="removeScriptsLabel"></label>
@@ -247,9 +257,10 @@
           <input type="checkbox" id="removeAudioSrcInput" />
         </div>
       </details>
-      <details>
+
+      <details style="display: none;">
         <summary id="destinationLabel"></summary>
-        <div class="option">
+        <div class="option" style="display: none;">
           <label for="saveToFilesystemInput" id="saveToFilesystemLabel"></label>
           <input
             type="radio"
@@ -257,7 +268,7 @@
             name="destinationInput"
           />
         </div>
-        <div class="option">
+        <div class="option" style="display: none;">
           <label for="saveToClipboardInput" id="saveToClipboardLabel"></label>
           <input
             type="radio"
@@ -269,15 +280,12 @@
           <label for="saveToGitHubInput" id="saveToGitHubLabel"></label>
           <input type="radio" id="saveToGitHubInput" name="destinationInput" />
         </div>
-        <div class="option second-level">
-          <label for="githubTokenInput" id="githubTokenLabel"></label>
-          <input type="text" id="githubTokenInput" class="medium-input" />
-        </div>
-        <div class="option">
+
+        <div class="option" style="display: none;">
           <label for="saveToGDriveInput" id="saveToGDriveLabel"></label>
           <input type="radio" id="saveToGDriveInput" name="destinationInput" />
         </div>
-        <div class="option">
+        <div class="option" style="display: none;">
           <label
             for="saveWithCompanionInput"
             id="saveWithCompanionLabel"
@@ -289,7 +297,8 @@
           />
         </div>
       </details>
-      <details>
+
+      <details style="display: none;">
         <summary id="editorLabel"></summary>
         <div class="option">
           <label
@@ -324,7 +333,8 @@
           <input type="checkbox" id="autoOpenEditorInput" />
         </div>
       </details>
-      <details>
+
+      <details style="display: none;">
         <summary id="bookmarksLabel"></summary>
         <div class="option">
           <label
@@ -355,7 +365,8 @@
           <input type="text" id="allowedBookmarkFoldersInput" />
         </div>
       </details>
-      <details>
+
+      <details style="display: none;">
         <summary id="autoSaveLabel"></summary>
         <div class="option">
           <label
@@ -403,7 +414,8 @@
           <input type="checkbox" id="autoSaveExternalSaveInput" />
         </div>
       </details>
-      <details>
+
+      <details style="display: none;">
         <summary id="miscLabel"></summary>
         <div class="option">
           <label
@@ -440,7 +452,8 @@
           <input type="checkbox" id="displayStatsInput" />
         </div>
       </details>
-      <details>
+
+      <details style="display: none;">
         <summary id="autoSettingsLabel"></summary>
         <div class="rules-table-container compact">
           <div class="thead">
@@ -451,10 +464,11 @@
                 class="th rule-autosave-profile"
                 id="autoSettingsAutoSaveProfileLabel"
               ></span>
-              <span class="th"
-                ><button id="rulesDeleteAllButton">
-                  <img src="../resources/button_delete_all.png" /></button
-              ></span>
+              <span class="th">
+                <button id="rulesDeleteAllButton">
+                  <img src="../resources/button_delete_all.png" />
+                </button>
+              </span>
             </div>
           </div>
           <div class="rules-table">
@@ -463,46 +477,50 @@
               <span class="td rule-url"></span>
               <span class="td rule-profile"></span>
               <span class="td rule-autosave-profile"></span>
-              <span class="td"
-                ><button class="rule-update-button">
+              <span class="td">
+                <button class="rule-update-button">
                   <img src="../resources/button_edit.png" />
                 </button>
                 <button class="rule-delete-button">
-                  <img src="../resources/button_delete.png" /></button
-              ></span>
+                  <img src="../resources/button_delete.png" />
+                </button>
+              </span>
             </div>
             <form class="tr rule-create">
-              <span class="td rule-url"
-                ><input
+              <span class="td rule-url">
+                <input
                   type="text"
                   id="ruleUrlInput"
                   placeholder="Type a complete or partial URL (e.g. example.com)"
-              /></span>
-              <span class="td rule-profile"
-                ><select id="ruleProfileInput"></select
-              ></span>
-              <span class="td rule-autosave-profile"
-                ><select id="ruleAutoSaveProfileInput"></select
-              ></span>
-              <span class="td"
-                ><button id="ruleAddButton" disabled type="submit">
-                  <img src="../resources/button_new.png" /></button
-              ></span>
+                />
+              </span>
+              <span class="td rule-profile">
+                <select id="ruleProfileInput"></select>
+              </span>
+              <span class="td rule-autosave-profile">
+                <select id="ruleAutoSaveProfileInput"></select>
+              </span>
+              <span class="td">
+                <button id="ruleAddButton" disabled type="submit">
+                  <img src="../resources/button_new.png" />
+                </button>
+              </span>
             </form>
             <form hidden class="tr rule-edit">
-              <span class="td rule-url"
-                ><input type="text" id="ruleEditUrlInput"
-              /></span>
-              <span class="td rule-profile"
-                ><select id="ruleEditProfileInput"></select
-              ></span>
-              <span class="td rule-autosave-profile"
-                ><select id="ruleEditAutoSaveProfileInput"></select
-              ></span>
-              <span class="td"
-                ><button id="ruleEditButton" type="submit">
-                  <img src="../resources/button_ok.png" /></button
-              ></span>
+              <span class="td rule-url">
+                <input type="text" id="ruleEditUrlInput" />
+              </span>
+              <span class="td rule-profile">
+                <select id="ruleEditProfileInput"></select>
+              </span>
+              <span class="td rule-autosave-profile">
+                <select id="ruleEditAutoSaveProfileInput"></select>
+              </span>
+              <span class="td">
+                <button id="ruleEditButton" type="submit">
+                  <img src="../resources/button_ok.png" />
+                </button>
+              </span>
             </form>
           </div>
         </div>
@@ -518,7 +536,8 @@
           <input type="checkbox" id="showAutoSaveProfileInput" />
         </div>
       </details>
-      <div class="option bottom">
+
+      <div class="option bottom" style="display: none;">
         <a href="help.html" target="SingleFileHelpPage" id="helpLabel"></a>
         <div class="buttons">
           <div class="sync-input">
