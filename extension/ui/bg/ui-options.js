@@ -24,686 +24,694 @@
 /* global browser, window, document, localStorage, FileReader, location, fetch, TextDecoder, DOMParser, HTMLElement */
 
 const HELP_ICON_URL =
-  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAABIUlEQVQ4y+2TsarCMBSGvxTBRdqiUZAWOrhJB9EXcPKFfCvfQYfulUKHDqXg4CYUJSioYO4mSDX3ttzt3n87fMlHTpIjlsulxpDZbEYYhgghSNOUOI5Ny2mZYBAELBYLer0eAJ7ncTweKYri4x7LJJRS0u12n7XrukgpjSc0CpVSXK/XZ32/31FKNW85z3PW6zXT6RSAJEnIsqy5UGvNZrNhu90CcDqd+C6tT6J+v//2Th+PB2VZ1hN2Oh3G4zGTyQTbtl/YbrdjtVpxu91+Ljyfz0RRhG3bzOfzF+Y4TvNXvlwuaK2pE4tfzr/wzwsty0IIURlL0998KxRCMBqN8H2/wlzXJQxD2u12vVkeDoeUZUkURRU+GAw4HA7s9/sK+wK6CWHasQ/S/wAAAABJRU5ErkJggg=='
-const HELP_PAGE_PATH = '/extension/ui/pages/help.html'
-let DEFAULT_PROFILE_NAME, DISABLED_PROFILE_NAME, CURRENT_PROFILE_NAME
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAABIUlEQVQ4y+2TsarCMBSGvxTBRdqiUZAWOrhJB9EXcPKFfCvfQYfulUKHDqXg4CYUJSioYO4mSDX3ttzt3n87fMlHTpIjlsulxpDZbEYYhgghSNOUOI5Ny2mZYBAELBYLer0eAJ7ncTweKYri4x7LJJRS0u12n7XrukgpjSc0CpVSXK/XZ32/31FKNW85z3PW6zXT6RSAJEnIsqy5UGvNZrNhu90CcDqd+C6tT6J+v//2Th+PB2VZ1hN2Oh3G4zGTyQTbtl/YbrdjtVpxu91+Ljyfz0RRhG3bzOfzF+Y4TvNXvlwuaK2pE4tfzr/wzwsty0IIURlL0998KxRCMBqN8H2/wlzXJQxD2u12vVkeDoeUZUkURRU+GAw4HA7s9/sK+wK6CWHasQ/S/wAAAABJRU5ErkJggg==";
+const HELP_PAGE_PATH = "/extension/ui/pages/help.html";
+let DEFAULT_PROFILE_NAME, DISABLED_PROFILE_NAME, CURRENT_PROFILE_NAME;
 browser.runtime
-  .sendMessage({ method: 'config.getConstants' })
+  .sendMessage({ method: "config.getConstants" })
   .then(
     (data) =>
       ({ DEFAULT_PROFILE_NAME, DISABLED_PROFILE_NAME, CURRENT_PROFILE_NAME } =
         data)
-  )
+  );
 const removeHiddenElementsLabel = document.getElementById(
-  'removeHiddenElementsLabel'
-)
+  "removeHiddenElementsLabel"
+);
 const removeUnusedStylesLabel = document.getElementById(
-  'removeUnusedStylesLabel'
-)
-const removeUnusedFontsLabel = document.getElementById('removeUnusedFontsLabel')
-const removeFramesLabel = document.getElementById('removeFramesLabel')
-const removeImportsLabel = document.getElementById('removeImportsLabel')
-const removeScriptsLabel = document.getElementById('removeScriptsLabel')
-const saveRawPageLabel = document.getElementById('saveRawPageLabel')
-const insertMetaCSPLabel = document.getElementById('insertMetaCSPLabel')
-const saveToClipboardLabel = document.getElementById('saveToClipboardLabel')
-const saveToFilesystemLabel = document.getElementById('saveToFilesystemLabel')
-const addProofLabel = document.getElementById('addProofLabel')
-const woleetKeyLabel = document.getElementById('woleetKeyLabel')
-const saveToGDriveLabel = document.getElementById('saveToGDriveLabel')
-const saveToGitHubLabel = document.getElementById('saveToGitHubLabel')
-const githubTokenLabel = document.getElementById('githubTokenLabel')
-const saveWithCompanionLabel = document.getElementById('saveWithCompanionLabel')
-const compressHTMLLabel = document.getElementById('compressHTMLLabel')
-const compressCSSLabel = document.getElementById('compressCSSLabel')
-const moveStylesInHeadLabel = document.getElementById('moveStylesInHeadLabel')
+  "removeUnusedStylesLabel"
+);
+const removeUnusedFontsLabel = document.getElementById(
+  "removeUnusedFontsLabel"
+);
+const removeFramesLabel = document.getElementById("removeFramesLabel");
+const removeImportsLabel = document.getElementById("removeImportsLabel");
+const removeScriptsLabel = document.getElementById("removeScriptsLabel");
+const saveRawPageLabel = document.getElementById("saveRawPageLabel");
+const insertMetaCSPLabel = document.getElementById("insertMetaCSPLabel");
+const saveToClipboardLabel = document.getElementById("saveToClipboardLabel");
+const saveToFilesystemLabel = document.getElementById("saveToFilesystemLabel");
+const addProofLabel = document.getElementById("addProofLabel");
+const woleetKeyLabel = document.getElementById("woleetKeyLabel");
+const saveToGDriveLabel = document.getElementById("saveToGDriveLabel");
+const saveToGitHubLabel = document.getElementById("saveToGitHubLabel");
+const githubTokenLabel = document.getElementById("githubTokenLabel");
+const saveWithCompanionLabel = document.getElementById(
+  "saveWithCompanionLabel"
+);
+const compressHTMLLabel = document.getElementById("compressHTMLLabel");
+const compressCSSLabel = document.getElementById("compressCSSLabel");
+const moveStylesInHeadLabel = document.getElementById("moveStylesInHeadLabel");
 const loadDeferredImagesLabel = document.getElementById(
-  'loadDeferredImagesLabel'
-)
+  "loadDeferredImagesLabel"
+);
 const loadDeferredImagesMaxIdleTimeLabel = document.getElementById(
-  'loadDeferredImagesMaxIdleTimeLabel'
-)
+  "loadDeferredImagesMaxIdleTimeLabel"
+);
 const loadDeferredImagesKeepZoomLevelLabel = document.getElementById(
-  'loadDeferredImagesKeepZoomLevelLabel'
-)
-const addMenuEntryLabel = document.getElementById('addMenuEntryLabel')
-const filenameTemplateLabel = document.getElementById('filenameTemplateLabel')
-const filenameMaxLengthLabel = document.getElementById('filenameMaxLengthLabel')
-const shadowEnabledLabel = document.getElementById('shadowEnabledLabel')
+  "loadDeferredImagesKeepZoomLevelLabel"
+);
+const addMenuEntryLabel = document.getElementById("addMenuEntryLabel");
+const filenameTemplateLabel = document.getElementById("filenameTemplateLabel");
+const filenameMaxLengthLabel = document.getElementById(
+  "filenameMaxLengthLabel"
+);
+const shadowEnabledLabel = document.getElementById("shadowEnabledLabel");
 const setMaxResourceSizeLabel = document.getElementById(
-  'setMaxResourceSizeLabel'
-)
-const maxResourceSizeLabel = document.getElementById('maxResourceSizeLabel')
-const confirmFilenameLabel = document.getElementById('confirmFilenameLabel')
+  "setMaxResourceSizeLabel"
+);
+const maxResourceSizeLabel = document.getElementById("maxResourceSizeLabel");
+const confirmFilenameLabel = document.getElementById("confirmFilenameLabel");
 const filenameConflictActionLabel = document.getElementById(
-  'filenameConflictActionLabel'
-)
+  "filenameConflictActionLabel"
+);
 const filenameConflictActionUniquifyLabel = document.getElementById(
-  'filenameConflictActionUniquifyLabel'
-)
+  "filenameConflictActionUniquifyLabel"
+);
 const filenameConflictActionOverwriteLabel = document.getElementById(
-  'filenameConflictActionOverwriteLabel'
-)
+  "filenameConflictActionOverwriteLabel"
+);
 const filenameConflictActionPromptLabel = document.getElementById(
-  'filenameConflictActionPromptLabel'
-)
+  "filenameConflictActionPromptLabel"
+);
 const filenameConflictActionSkipLabel = document.getElementById(
-  'filenameConflictActionSkipLabel'
-)
-const removeAudioLabel = document.getElementById('removeAudioLabel')
-const removeVideoLabel = document.getElementById('removeVideoLabel')
-const displayInfobarLabel = document.getElementById('displayInfobarLabel')
-const displayStatsLabel = document.getElementById('displayStatsLabel')
-const backgroundSaveLabel = document.getElementById('backgroundSaveLabel')
-const autoSaveDelayLabel = document.getElementById('autoSaveDelayLabel')
-const autoSaveLoadLabel = document.getElementById('autoSaveLoadLabel')
-const autoSaveUnloadLabel = document.getElementById('autoSaveUnloadLabel')
+  "filenameConflictActionSkipLabel"
+);
+const removeAudioLabel = document.getElementById("removeAudioLabel");
+const removeVideoLabel = document.getElementById("removeVideoLabel");
+const displayInfobarLabel = document.getElementById("displayInfobarLabel");
+const displayStatsLabel = document.getElementById("displayStatsLabel");
+const backgroundSaveLabel = document.getElementById("backgroundSaveLabel");
+const autoSaveDelayLabel = document.getElementById("autoSaveDelayLabel");
+const autoSaveLoadLabel = document.getElementById("autoSaveLoadLabel");
+const autoSaveUnloadLabel = document.getElementById("autoSaveUnloadLabel");
 const autoSaveLoadOrUnloadLabel = document.getElementById(
-  'autoSaveLoadOrUnloadLabel'
-)
-const autoSaveDiscardLabel = document.getElementById('autoSaveDiscardLabel')
-const autoSaveRemoveLabel = document.getElementById('autoSaveRemoveLabel')
-const autoSaveRepeatLabel = document.getElementById('autoSaveRepeatLabel')
+  "autoSaveLoadOrUnloadLabel"
+);
+const autoSaveDiscardLabel = document.getElementById("autoSaveDiscardLabel");
+const autoSaveRemoveLabel = document.getElementById("autoSaveRemoveLabel");
+const autoSaveRepeatLabel = document.getElementById("autoSaveRepeatLabel");
 const autoSaveRepeatDelayLabel = document.getElementById(
-  'autoSaveRepeatDelayLabel'
-)
+  "autoSaveRepeatDelayLabel"
+);
 const autoSaveExternalSaveLabel = document.getElementById(
-  'autoSaveExternalSaveLabel'
-)
+  "autoSaveExternalSaveLabel"
+);
 const removeAlternativeFontsLabel = document.getElementById(
-  'removeAlternativeFontsLabel'
-)
+  "removeAlternativeFontsLabel"
+);
 const removeAlternativeImagesLabel = document.getElementById(
-  'removeAlternativeImagesLabel'
-)
+  "removeAlternativeImagesLabel"
+);
 const removeAlternativeMediasLabel = document.getElementById(
-  'removeAlternativeMediasLabel'
-)
+  "removeAlternativeMediasLabel"
+);
 const saveCreatedBookmarksLabel = document.getElementById(
-  'saveCreatedBookmarksLabel'
-)
+  "saveCreatedBookmarksLabel"
+);
 const passReferrerOnErrorLabel = document.getElementById(
-  'passReferrerOnErrorLabel'
-)
+  "passReferrerOnErrorLabel"
+);
 const replaceBookmarkURLLabel = document.getElementById(
-  'replaceBookmarkURLLabel'
-)
+  "replaceBookmarkURLLabel"
+);
 const allowedBookmarkFoldersLabel = document.getElementById(
-  'allowedBookmarkFoldersLabel'
-)
+  "allowedBookmarkFoldersLabel"
+);
 const ignoredBookmarkFoldersLabel = document.getElementById(
-  'ignoredBookmarkFoldersLabel'
-)
-const titleLabel = document.getElementById('titleLabel')
-const userInterfaceLabel = document.getElementById('userInterfaceLabel')
-const filenameLabel = document.getElementById('filenameLabel')
-const htmlContentLabel = document.getElementById('htmlContentLabel')
-const imagesLabel = document.getElementById('imagesLabel')
-const stylesheetsLabel = document.getElementById('stylesheetsLabel')
-const fontsLabel = document.getElementById('fontsLabel')
-const otherResourcesLabel = document.getElementById('otherResourcesLabel')
-const destinationLabel = document.getElementById('destinationLabel')
-const bookmarksLabel = document.getElementById('bookmarksLabel')
-const autoSaveLabel = document.getElementById('autoSaveLabel')
-const autoSettingsLabel = document.getElementById('autoSettingsLabel')
-const autoSettingsUrlLabel = document.getElementById('autoSettingsUrlLabel')
+  "ignoredBookmarkFoldersLabel"
+);
+const titleLabel = document.getElementById("titleLabel");
+const userInterfaceLabel = document.getElementById("userInterfaceLabel");
+const filenameLabel = document.getElementById("filenameLabel");
+const htmlContentLabel = document.getElementById("htmlContentLabel");
+const imagesLabel = document.getElementById("imagesLabel");
+const stylesheetsLabel = document.getElementById("stylesheetsLabel");
+const fontsLabel = document.getElementById("fontsLabel");
+const otherResourcesLabel = document.getElementById("otherResourcesLabel");
+const destinationLabel = document.getElementById("destinationLabel");
+const bookmarksLabel = document.getElementById("bookmarksLabel");
+const autoSaveLabel = document.getElementById("autoSaveLabel");
+const autoSettingsLabel = document.getElementById("autoSettingsLabel");
+const autoSettingsUrlLabel = document.getElementById("autoSettingsUrlLabel");
 const autoSettingsProfileLabel = document.getElementById(
-  'autoSettingsProfileLabel'
-)
+  "autoSettingsProfileLabel"
+);
 const autoSettingsAutoSaveProfileLabel = document.getElementById(
-  'autoSettingsAutoSaveProfileLabel'
-)
-const showAllProfilesLabel = document.getElementById('showAllProfilesLabel')
+  "autoSettingsAutoSaveProfileLabel"
+);
+const showAllProfilesLabel = document.getElementById("showAllProfilesLabel");
 const showAutoSaveProfileLabel = document.getElementById(
-  'showAutoSaveProfileLabel'
-)
+  "showAutoSaveProfileLabel"
+);
 const groupDuplicateImagesLabel = document.getElementById(
-  'groupDuplicateImagesLabel'
-)
-const confirmInfobarLabel = document.getElementById('confirmInfobarLabel')
-const autoCloseLabel = document.getElementById('autoCloseLabel')
-const editorLabel = document.getElementById('editorLabel')
-const openEditorLabel = document.getElementById('openEditorLabel')
-const openSavedPageLabel = document.getElementById('openSavedPageLabel')
-const autoOpenEditorLabel = document.getElementById('autoOpenEditorLabel')
-const defaultEditorModeLabel = document.getElementById('defaultEditorModeLabel')
-const applySystemThemeLabel = document.getElementById('applySystemThemeLabel')
-const warnUnsavedPageLabel = document.getElementById('warnUnsavedPageLabel')
-const infobarTemplateLabel = document.getElementById('infobarTemplateLabel')
-const blockMixedContentLabel = document.getElementById('blockMixedContentLabel')
-const saveOriginalURLsLabel = document.getElementById('saveOriginalURLsLabel')
-const includeInfobarLabel = document.getElementById('includeInfobarLabel')
-const miscLabel = document.getElementById('miscLabel')
-const helpLabel = document.getElementById('helpLabel')
-const synchronizeLabel = document.getElementById('synchronizeLabel')
-const addProfileButton = document.getElementById('addProfileButton')
-const deleteProfileButton = document.getElementById('deleteProfileButton')
-const renameProfileButton = document.getElementById('renameProfileButton')
-const resetButton = document.getElementById('resetButton')
-const exportButton = document.getElementById('exportButton')
-const importButton = document.getElementById('importButton')
-const fileInput = document.getElementById('fileInput')
-const profileNamesInput = document.getElementById('profileNamesInput')
+  "groupDuplicateImagesLabel"
+);
+const confirmInfobarLabel = document.getElementById("confirmInfobarLabel");
+const autoCloseLabel = document.getElementById("autoCloseLabel");
+const editorLabel = document.getElementById("editorLabel");
+const openEditorLabel = document.getElementById("openEditorLabel");
+const openSavedPageLabel = document.getElementById("openSavedPageLabel");
+const autoOpenEditorLabel = document.getElementById("autoOpenEditorLabel");
+const defaultEditorModeLabel = document.getElementById(
+  "defaultEditorModeLabel"
+);
+const applySystemThemeLabel = document.getElementById("applySystemThemeLabel");
+const warnUnsavedPageLabel = document.getElementById("warnUnsavedPageLabel");
+const infobarTemplateLabel = document.getElementById("infobarTemplateLabel");
+const blockMixedContentLabel = document.getElementById(
+  "blockMixedContentLabel"
+);
+const saveOriginalURLsLabel = document.getElementById("saveOriginalURLsLabel");
+const includeInfobarLabel = document.getElementById("includeInfobarLabel");
+const miscLabel = document.getElementById("miscLabel");
+const helpLabel = document.getElementById("helpLabel");
+const synchronizeLabel = document.getElementById("synchronizeLabel");
+const addProfileButton = document.getElementById("addProfileButton");
+const deleteProfileButton = document.getElementById("deleteProfileButton");
+const renameProfileButton = document.getElementById("renameProfileButton");
+const resetButton = document.getElementById("resetButton");
+const exportButton = document.getElementById("exportButton");
+const importButton = document.getElementById("importButton");
+const fileInput = document.getElementById("fileInput");
+const profileNamesInput = document.getElementById("profileNamesInput");
 const removeHiddenElementsInput = document.getElementById(
-  'removeHiddenElementsInput'
-)
+  "removeHiddenElementsInput"
+);
 const removeUnusedStylesInput = document.getElementById(
-  'removeUnusedStylesInput'
-)
-const removeUnusedFontsInput = document.getElementById('removeUnusedFontsInput')
-const removeFramesInput = document.getElementById('removeFramesInput')
-const removeImportsInput = document.getElementById('removeImportsInput')
-const removeScriptsInput = document.getElementById('removeScriptsInput')
-const saveRawPageInput = document.getElementById('saveRawPageInput')
-const insertMetaCSPInput = document.getElementById('insertMetaCSPInput')
-const saveToClipboardInput = document.getElementById('saveToClipboardInput')
-const addProofInput = document.getElementById('addProofInput')
-const woleetKeyInput = document.getElementById('woleetKeyInput')
-const saveToGDriveInput = document.getElementById('saveToGDriveInput')
-const saveToGitHubInput = document.getElementById('saveToGitHubInput')
-const githubTokenInput = document.getElementById('githubTokenInput')
-const saveWithCompanionInput = document.getElementById('saveWithCompanionInput')
-const saveToFilesystemInput = document.getElementById('saveToFilesystemInput')
-const compressHTMLInput = document.getElementById('compressHTMLInput')
-const compressCSSInput = document.getElementById('compressCSSInput')
-const moveStylesInHeadInput = document.getElementById('moveStylesInHeadInput')
+  "removeUnusedStylesInput"
+);
+const removeUnusedFontsInput = document.getElementById(
+  "removeUnusedFontsInput"
+);
+const removeFramesInput = document.getElementById("removeFramesInput");
+const removeImportsInput = document.getElementById("removeImportsInput");
+const removeScriptsInput = document.getElementById("removeScriptsInput");
+const saveRawPageInput = document.getElementById("saveRawPageInput");
+const insertMetaCSPInput = document.getElementById("insertMetaCSPInput");
+const saveToClipboardInput = document.getElementById("saveToClipboardInput");
+const addProofInput = document.getElementById("addProofInput");
+const woleetKeyInput = document.getElementById("woleetKeyInput");
+const saveToGDriveInput = document.getElementById("saveToGDriveInput");
+const saveToGitHubInput = document.getElementById("saveToGitHubInput");
+const githubTokenInput = document.getElementById("githubTokenInput");
+const saveWithCompanionInput = document.getElementById(
+  "saveWithCompanionInput"
+);
+const saveToFilesystemInput = document.getElementById("saveToFilesystemInput");
+const compressHTMLInput = document.getElementById("compressHTMLInput");
+const compressCSSInput = document.getElementById("compressCSSInput");
+const moveStylesInHeadInput = document.getElementById("moveStylesInHeadInput");
 const loadDeferredImagesInput = document.getElementById(
-  'loadDeferredImagesInput'
-)
+  "loadDeferredImagesInput"
+);
 const loadDeferredImagesMaxIdleTimeInput = document.getElementById(
-  'loadDeferredImagesMaxIdleTimeInput'
-)
+  "loadDeferredImagesMaxIdleTimeInput"
+);
 const loadDeferredImagesKeepZoomLevelInput = document.getElementById(
-  'loadDeferredImagesKeepZoomLevelInput'
-)
+  "loadDeferredImagesKeepZoomLevelInput"
+);
 const contextMenuEnabledInput = document.getElementById(
-  'contextMenuEnabledInput'
-)
-const filenameTemplateInput = document.getElementById('filenameTemplateInput')
-const filenameMaxLengthInput = document.getElementById('filenameMaxLengthInput')
-const shadowEnabledInput = document.getElementById('shadowEnabledInput')
-const maxResourceSizeInput = document.getElementById('maxResourceSizeInput')
+  "contextMenuEnabledInput"
+);
+const filenameTemplateInput = document.getElementById("filenameTemplateInput");
+const filenameMaxLengthInput = document.getElementById(
+  "filenameMaxLengthInput"
+);
+const shadowEnabledInput = document.getElementById("shadowEnabledInput");
+const maxResourceSizeInput = document.getElementById("maxResourceSizeInput");
 const maxResourceSizeEnabledInput = document.getElementById(
-  'maxResourceSizeEnabledInput'
-)
-const confirmFilenameInput = document.getElementById('confirmFilenameInput')
+  "maxResourceSizeEnabledInput"
+);
+const confirmFilenameInput = document.getElementById("confirmFilenameInput");
 const filenameConflictActionInput = document.getElementById(
-  'filenameConflictActionInput'
-)
-const removeAudioSrcInput = document.getElementById('removeAudioSrcInput')
-const removeVideoSrcInput = document.getElementById('removeVideoSrcInput')
-const displayInfobarInput = document.getElementById('displayInfobarInput')
-const displayStatsInput = document.getElementById('displayStatsInput')
-const backgroundSaveInput = document.getElementById('backgroundSaveInput')
-const autoSaveDelayInput = document.getElementById('autoSaveDelayInput')
-const autoSaveLoadInput = document.getElementById('autoSaveLoadInput')
-const autoSaveUnloadInput = document.getElementById('autoSaveUnloadInput')
-const autoSaveDiscardInput = document.getElementById('autoSaveDiscardInput')
-const autoSaveRemoveInput = document.getElementById('autoSaveRemoveInput')
+  "filenameConflictActionInput"
+);
+const removeAudioSrcInput = document.getElementById("removeAudioSrcInput");
+const removeVideoSrcInput = document.getElementById("removeVideoSrcInput");
+const displayInfobarInput = document.getElementById("displayInfobarInput");
+const displayStatsInput = document.getElementById("displayStatsInput");
+const backgroundSaveInput = document.getElementById("backgroundSaveInput");
+const autoSaveDelayInput = document.getElementById("autoSaveDelayInput");
+const autoSaveLoadInput = document.getElementById("autoSaveLoadInput");
+const autoSaveUnloadInput = document.getElementById("autoSaveUnloadInput");
+const autoSaveDiscardInput = document.getElementById("autoSaveDiscardInput");
+const autoSaveRemoveInput = document.getElementById("autoSaveRemoveInput");
 const autoSaveLoadOrUnloadInput = document.getElementById(
-  'autoSaveLoadOrUnloadInput'
-)
-const autoSaveRepeatInput = document.getElementById('autoSaveRepeatInput')
+  "autoSaveLoadOrUnloadInput"
+);
+const autoSaveRepeatInput = document.getElementById("autoSaveRepeatInput");
 const autoSaveRepeatDelayInput = document.getElementById(
-  'autoSaveRepeatDelayInput'
-)
+  "autoSaveRepeatDelayInput"
+);
 const autoSaveExternalSaveInput = document.getElementById(
-  'autoSaveExternalSaveInput'
-)
+  "autoSaveExternalSaveInput"
+);
 const removeAlternativeFontsInput = document.getElementById(
-  'removeAlternativeFontsInput'
-)
+  "removeAlternativeFontsInput"
+);
 const removeAlternativeImagesInput = document.getElementById(
-  'removeAlternativeImagesInput'
-)
+  "removeAlternativeImagesInput"
+);
 const removeAlternativeMediasInput = document.getElementById(
-  'removeAlternativeMediasInput'
-)
+  "removeAlternativeMediasInput"
+);
 const saveCreatedBookmarksInput = document.getElementById(
-  'saveCreatedBookmarksInput'
-)
+  "saveCreatedBookmarksInput"
+);
 const passReferrerOnErrorInput = document.getElementById(
-  'passReferrerOnErrorInput'
-)
+  "passReferrerOnErrorInput"
+);
 const replaceBookmarkURLInput = document.getElementById(
-  'replaceBookmarkURLInput'
-)
+  "replaceBookmarkURLInput"
+);
 const allowedBookmarkFoldersInput = document.getElementById(
-  'allowedBookmarkFoldersInput'
-)
+  "allowedBookmarkFoldersInput"
+);
 const ignoredBookmarkFoldersInput = document.getElementById(
-  'ignoredBookmarkFoldersInput'
-)
+  "ignoredBookmarkFoldersInput"
+);
 const groupDuplicateImagesInput = document.getElementById(
-  'groupDuplicateImagesInput'
-)
-const infobarTemplateInput = document.getElementById('infobarTemplateInput')
-const blockMixedContentInput = document.getElementById('blockMixedContentInput')
-const saveOriginalURLsInput = document.getElementById('saveOriginalURLsInput')
-const includeInfobarInput = document.getElementById('includeInfobarInput')
-const confirmInfobarInput = document.getElementById('confirmInfobarInput')
-const autoCloseInput = document.getElementById('autoCloseInput')
-const openEditorInput = document.getElementById('openEditorInput')
-const openSavedPageInput = document.getElementById('openSavedPageInput')
-const autoOpenEditorInput = document.getElementById('autoOpenEditorInput')
-const defaultEditorModeInput = document.getElementById('defaultEditorModeInput')
+  "groupDuplicateImagesInput"
+);
+const infobarTemplateInput = document.getElementById("infobarTemplateInput");
+const blockMixedContentInput = document.getElementById(
+  "blockMixedContentInput"
+);
+const saveOriginalURLsInput = document.getElementById("saveOriginalURLsInput");
+const includeInfobarInput = document.getElementById("includeInfobarInput");
+const confirmInfobarInput = document.getElementById("confirmInfobarInput");
+const autoCloseInput = document.getElementById("autoCloseInput");
+const openEditorInput = document.getElementById("openEditorInput");
+const openSavedPageInput = document.getElementById("openSavedPageInput");
+const autoOpenEditorInput = document.getElementById("autoOpenEditorInput");
+const defaultEditorModeInput = document.getElementById(
+  "defaultEditorModeInput"
+);
 const defaultEditorModeNormalLabel = document.getElementById(
-  'defaultEditorModeNormalLabel'
-)
+  "defaultEditorModeNormalLabel"
+);
 const defaultEditorModeEditLabel = document.getElementById(
-  'defaultEditorModeEditLabel'
-)
+  "defaultEditorModeEditLabel"
+);
 const defaultEditorModeFormatLabel = document.getElementById(
-  'defaultEditorModeFormatLabel'
-)
+  "defaultEditorModeFormatLabel"
+);
 const defaultEditorModeCutLabel = document.getElementById(
-  'defaultEditorModeCutLabel'
-)
+  "defaultEditorModeCutLabel"
+);
 const defaultEditorModeCutExternalLabel = document.getElementById(
-  'defaultEditorModeCutExternalLabel'
-)
-const applySystemThemeInput = document.getElementById('applySystemThemeInput')
-const warnUnsavedPageInput = document.getElementById('warnUnsavedPageInput')
-const expandAllButton = document.getElementById('expandAllButton')
-const rulesDeleteAllButton = document.getElementById('rulesDeleteAllButton')
-const ruleUrlInput = document.getElementById('ruleUrlInput')
-const ruleProfileInput = document.getElementById('ruleProfileInput')
-const ruleAutoSaveProfileInput = document.getElementById(
-  'ruleAutoSaveProfileInput'
-)
-const ruleEditProfileInput = document.getElementById('ruleEditProfileInput')
-const ruleEditAutoSaveProfileInput = document.getElementById(
-  'ruleEditAutoSaveProfileInput'
-)
-const ruleAddButton = document.getElementById('ruleAddButton')
-const rulesElement = document.querySelector('.rules-table')
-const rulesContainerElement = document.querySelector('.rules-table-container')
-const ruleEditUrlInput = document.getElementById('ruleEditUrlInput')
-const ruleEditButton = document.getElementById('ruleEditButton')
-const createURLElement = rulesElement.querySelector('.rule-create')
-const showAllProfilesInput = document.getElementById('showAllProfilesInput')
-const showAutoSaveProfileInput = document.getElementById(
-  'showAutoSaveProfileInput'
-)
-const synchronizeInput = document.getElementById('synchronizeInput')
-const resetAllButton = document.getElementById('resetAllButton')
-const resetCurrentButton = document.getElementById('resetCurrentButton')
-const resetCancelButton = document.getElementById('resetCancelButton')
-const confirmButton = document.getElementById('confirmButton')
-const cancelButton = document.getElementById('cancelButton')
-const promptInput = document.getElementById('promptInput')
-const promptCancelButton = document.getElementById('promptCancelButton')
-const promptConfirmButton = document.getElementById('promptConfirmButton')
+  "defaultEditorModeCutExternalLabel"
+);
+const applySystemThemeInput = document.getElementById("applySystemThemeInput");
+const warnUnsavedPageInput = document.getElementById("warnUnsavedPageInput");
 
-let sidePanelDisplay
-if (location.href.endsWith('#side-panel')) {
-  sidePanelDisplay = true
-  document.querySelector('.options-title').remove()
-  document.documentElement.classList.add('side-panel')
+const rulesDeleteAllButton = document.getElementById("rulesDeleteAllButton");
+const ruleUrlInput = document.getElementById("ruleUrlInput");
+const ruleProfileInput = document.getElementById("ruleProfileInput");
+const ruleAutoSaveProfileInput = document.getElementById(
+  "ruleAutoSaveProfileInput"
+);
+const ruleEditProfileInput = document.getElementById("ruleEditProfileInput");
+const ruleEditAutoSaveProfileInput = document.getElementById(
+  "ruleEditAutoSaveProfileInput"
+);
+const ruleAddButton = document.getElementById("ruleAddButton");
+const rulesElement = document.querySelector(".rules-table");
+const rulesContainerElement = document.querySelector(".rules-table-container");
+const ruleEditUrlInput = document.getElementById("ruleEditUrlInput");
+const ruleEditButton = document.getElementById("ruleEditButton");
+const createURLElement = rulesElement.querySelector(".rule-create");
+const showAllProfilesInput = document.getElementById("showAllProfilesInput");
+const showAutoSaveProfileInput = document.getElementById(
+  "showAutoSaveProfileInput"
+);
+const synchronizeInput = document.getElementById("synchronizeInput");
+const resetAllButton = document.getElementById("resetAllButton");
+const resetCurrentButton = document.getElementById("resetCurrentButton");
+const resetCancelButton = document.getElementById("resetCancelButton");
+const confirmButton = document.getElementById("confirmButton");
+const cancelButton = document.getElementById("cancelButton");
+const promptInput = document.getElementById("promptInput");
+const promptCancelButton = document.getElementById("promptCancelButton");
+const promptConfirmButton = document.getElementById("promptConfirmButton");
+
+let sidePanelDisplay;
+if (location.href.endsWith("#side-panel")) {
+  sidePanelDisplay = true;
+  document.querySelector(".options-title").remove();
+  document.documentElement.classList.add("side-panel");
 }
 browser.runtime.onMessage.addListener((message) => {
   if (
-    message.method == 'options.refresh' ||
-    (message.method == 'options.refreshPanel' && sidePanelDisplay)
+    message.method == "options.refresh" ||
+    (message.method == "options.refreshPanel" && sidePanelDisplay)
   ) {
-    refresh(message.profileName)
+    refresh(message.profileName);
   }
-})
-let pendingSave = Promise.resolve()
-let autoSaveProfileChanged
+});
+let pendingSave = Promise.resolve();
+let autoSaveProfileChanged;
 ruleProfileInput.onchange = () => {
   if (
     !autoSaveProfileChanged &&
     ruleProfileInput.value != CURRENT_PROFILE_NAME
   ) {
-    ruleAutoSaveProfileInput.value = ruleProfileInput.value
+    ruleAutoSaveProfileInput.value = ruleProfileInput.value;
   }
-}
+};
 ruleAutoSaveProfileInput.onchange = () => {
-  autoSaveProfileChanged = true
-}
+  autoSaveProfileChanged = true;
+};
 rulesDeleteAllButton.addEventListener(
-  'click',
+  "click",
   async (event) => {
     if (
       await confirm(
-        browser.i18n.getMessage('optionsDeleteDisplayedRulesConfirm'),
+        browser.i18n.getMessage("optionsDeleteDisplayedRulesConfirm"),
         event.clientY - 100
       )
     ) {
       await browser.runtime.sendMessage({
-        method: 'config.deleteRules',
+        method: "config.deleteRules",
         profileName: !showAllProfilesInput.checked && profileNamesInput.value,
-      })
-      await refresh()
-      await refreshExternalComponents()
+      });
+      await refresh();
+      await refreshExternalComponents();
     }
   },
   false
-)
+);
 createURLElement.onsubmit = async (event) => {
-  event.preventDefault()
+  event.preventDefault();
   try {
     await browser.runtime.sendMessage({
-      method: 'config.addRule',
+      method: "config.addRule",
       url: ruleUrlInput.value,
       profileName: ruleProfileInput.value,
       autoSaveProfileName: ruleAutoSaveProfileInput.value,
-    })
+    });
   } catch (error) {
     // ignored
   }
-  ruleUrlInput.value = ''
-  ruleProfileInput.value = ruleAutoSaveProfileInput.value = DEFAULT_PROFILE_NAME
-  autoSaveProfileChanged = false
-  await refresh()
-  await refreshExternalComponents()
-  ruleUrlInput.focus()
-}
+  ruleUrlInput.value = "";
+  ruleProfileInput.value = ruleAutoSaveProfileInput.value =
+    DEFAULT_PROFILE_NAME;
+  autoSaveProfileChanged = false;
+  await refresh();
+  await refreshExternalComponents();
+  ruleUrlInput.focus();
+};
 ruleUrlInput.onclick =
   ruleUrlInput.onkeyup =
   ruleUrlInput.onchange =
     async () => {
-      ruleAddButton.disabled = !ruleUrlInput.value
+      ruleAddButton.disabled = !ruleUrlInput.value;
       const rules = await browser.runtime.sendMessage({
-        method: 'config.getRules',
-      })
+        method: "config.getRules",
+      });
       if (rules.find((rule) => rule.url == ruleUrlInput.value)) {
-        ruleAddButton.disabled = true
+        ruleAddButton.disabled = true;
       }
-    }
+    };
 ruleEditUrlInput.onclick =
   ruleEditUrlInput.onkeyup =
   ruleEditUrlInput.onchange =
     async () => {
-      ruleEditButton.disabled = !ruleEditUrlInput.value
+      ruleEditButton.disabled = !ruleEditUrlInput.value;
       const rules = await browser.runtime.sendMessage({
-        method: 'config.getRules',
-      })
+        method: "config.getRules",
+      });
       if (rules.find((rule) => rule.url == ruleEditUrlInput.value)) {
-        ruleEditButton.disabled = true
+        ruleEditButton.disabled = true;
       }
-    }
-if (getLocalStorageItem('optionShowAutoSaveProfile')) {
-  showAutoSaveProfileInput.checked = true
-  rulesContainerElement.classList.remove('compact')
+    };
+if (getLocalStorageItem("optionShowAutoSaveProfile")) {
+  showAutoSaveProfileInput.checked = true;
+  rulesContainerElement.classList.remove("compact");
 }
 showAutoSaveProfileInput.addEventListener(
-  'click',
+  "click",
   () => {
     if (showAutoSaveProfileInput.checked) {
-      setLocalStorageItem('optionShowAutoSaveProfile', 1)
-      rulesContainerElement.classList.remove('compact')
+      setLocalStorageItem("optionShowAutoSaveProfile", 1);
+      rulesContainerElement.classList.remove("compact");
     } else {
-      removeLocalStorageItem('optionShowAutoSaveProfile')
-      rulesContainerElement.classList.add('compact')
+      removeLocalStorageItem("optionShowAutoSaveProfile");
+      rulesContainerElement.classList.add("compact");
     }
   },
   false
-)
-if (getLocalStorageItem('optionShowAllProfiles')) {
-  showAllProfilesInput.checked = true
+);
+if (getLocalStorageItem("optionShowAllProfiles")) {
+  showAllProfilesInput.checked = true;
 }
 showAllProfilesInput.addEventListener(
-  'click',
+  "click",
   () => {
     if (showAllProfilesInput.checked) {
-      setLocalStorageItem('optionShowAllProfiles', 1)
+      setLocalStorageItem("optionShowAllProfiles", 1);
     } else {
-      removeLocalStorageItem('optionShowAllProfiles')
+      removeLocalStorageItem("optionShowAllProfiles");
     }
   },
   false
-)
+);
 addProfileButton.addEventListener(
-  'click',
+  "click",
   async (event) => {
     const profileName = await prompt(
-      browser.i18n.getMessage('profileAddPrompt'),
+      browser.i18n.getMessage("profileAddPrompt"),
       event.clientY + 50
-    )
+    );
     if (profileName) {
       try {
         await browser.runtime.sendMessage({
-          method: 'config.createProfile',
+          method: "config.createProfile",
           profileName,
           fromProfileName: profileNamesInput.value,
-        })
+        });
       } catch (error) {
         // ignored
       }
       if (sidePanelDisplay) {
-        await refresh()
+        await refresh();
       } else {
-        await refresh(profileName)
+        await refresh(profileName);
       }
-      await refreshExternalComponents()
+      await refreshExternalComponents();
     }
   },
   false
-)
+);
 deleteProfileButton.addEventListener(
-  'click',
+  "click",
   async (event) => {
     if (
       await confirm(
-        browser.i18n.getMessage('profileDeleteConfirm'),
+        browser.i18n.getMessage("profileDeleteConfirm"),
         event.clientY + 50
       )
     ) {
       try {
         await browser.runtime.sendMessage({
-          method: 'config.deleteProfile',
+          method: "config.deleteProfile",
           profileName: profileNamesInput.value,
-        })
+        });
       } catch (error) {
         // ignored
       }
-      profileNamesInput.value = null
-      await refresh()
-      await refreshExternalComponents()
+      profileNamesInput.value = null;
+      await refresh();
+      await refreshExternalComponents();
     }
   },
   false
-)
+);
 renameProfileButton.addEventListener(
-  'click',
+  "click",
   async (event) => {
     const profileName = await prompt(
-      browser.i18n.getMessage('profileRenamePrompt'),
+      browser.i18n.getMessage("profileRenamePrompt"),
       event.clientY + 50,
       profileNamesInput.value
-    )
+    );
     if (profileName) {
       try {
         await browser.runtime.sendMessage({
-          method: 'config.renameProfile',
+          method: "config.renameProfile",
           profileName: profileNamesInput.value,
           newProfileName: profileName,
-        })
+        });
       } catch (error) {
         // ignored
       }
-      await refresh(profileName)
-      await refreshExternalComponents()
+      await refresh(profileName);
+      await refreshExternalComponents();
     }
   },
   false
-)
+);
 resetButton.addEventListener(
-  'click',
+  "click",
   async (event) => {
-    const choice = await reset(event.clientY - 250)
+    const choice = await reset(event.clientY - 250);
     if (choice) {
-      if (choice == 'all') {
-        await browser.runtime.sendMessage({ method: 'config.resetProfiles' })
-        await refresh(DEFAULT_PROFILE_NAME)
-        await refreshExternalComponents()
+      if (choice == "all") {
+        await browser.runtime.sendMessage({ method: "config.resetProfiles" });
+        await refresh(DEFAULT_PROFILE_NAME);
+        await refreshExternalComponents();
       }
-      if (choice == 'current') {
+      if (choice == "current") {
         await browser.runtime.sendMessage({
-          method: 'config.resetProfile',
+          method: "config.resetProfile",
           profileName: profileNamesInput.value,
-        })
-        await refresh()
-        await refreshExternalComponents()
+        });
+        await refresh();
+        await refreshExternalComponents();
       }
-      await update()
+      await update();
     }
   },
   false
-)
+);
 exportButton.addEventListener(
-  'click',
+  "click",
   async () => {
-    await browser.runtime.sendMessage({ method: 'config.exportConfig' })
+    await browser.runtime.sendMessage({ method: "config.exportConfig" });
   },
   false
-)
+);
 importButton.addEventListener(
-  'click',
+  "click",
   () => {
     fileInput.onchange = async () => {
       if (fileInput.files.length) {
-        const reader = new FileReader()
-        reader.readAsText(fileInput.files[0])
+        const reader = new FileReader();
+        reader.readAsText(fileInput.files[0]);
         const serializedConfig = await new Promise((resolve, reject) => {
-          reader.addEventListener('load', () => resolve(reader.result), false)
-          reader.addEventListener('error', reject, false)
-        })
-        const config = JSON.parse(serializedConfig)
+          reader.addEventListener("load", () => resolve(reader.result), false);
+          reader.addEventListener("error", reject, false);
+        });
+        const config = JSON.parse(serializedConfig);
         await browser.runtime.sendMessage({
-          method: 'config.importConfig',
+          method: "config.importConfig",
           config,
-        })
-        await refresh(DEFAULT_PROFILE_NAME)
-        await refreshExternalComponents()
-        fileInput.value = ''
+        });
+        await refresh(DEFAULT_PROFILE_NAME);
+        await refreshExternalComponents();
+        fileInput.value = "";
       }
-    }
-    fileInput.click()
+    };
+    fileInput.click();
   },
   false
-)
+);
 autoSaveUnloadInput.addEventListener(
-  'click',
+  "click",
   async () => {
     if (!autoSaveLoadInput.checked && !autoSaveUnloadInput.checked) {
-      autoSaveLoadOrUnloadInput.checked = true
+      autoSaveLoadOrUnloadInput.checked = true;
     }
   },
   false
-)
+);
 autoSaveLoadInput.addEventListener(
-  'click',
+  "click",
   async () => {
     if (!autoSaveLoadInput.checked && !autoSaveUnloadInput.checked) {
-      autoSaveLoadOrUnloadInput.checked = true
+      autoSaveLoadOrUnloadInput.checked = true;
     }
   },
   false
-)
+);
 autoSaveLoadOrUnloadInput.addEventListener(
-  'click',
+  "click",
   async () => {
     if (autoSaveLoadOrUnloadInput.checked) {
-      autoSaveUnloadInput.checked = autoSaveLoadInput.checked = false
+      autoSaveUnloadInput.checked = autoSaveLoadInput.checked = false;
     } else {
-      autoSaveUnloadInput.checked = false
+      autoSaveUnloadInput.checked = false;
     }
   },
   false
-)
-expandAllButton.addEventListener(
-  'click',
-  () => {
-    if (expandAllButton.className) {
-      expandAllButton.className = ''
-    } else {
-      expandAllButton.className = 'opened'
-    }
-    document
-      .querySelectorAll('details')
-      .forEach(
-        (detailElement) =>
-          (detailElement.open = Boolean(expandAllButton.className))
-      )
-  },
-  false
-)
+);
 removeScriptsInput.addEventListener(
-  'click',
+  "click",
   () => {
     if (!removeScriptsInput.checked) {
-      removeHiddenElementsInput.checked = false
-      removeUnusedStylesInput.checked = false
+      removeHiddenElementsInput.checked = false;
+      removeUnusedStylesInput.checked = false;
     }
   },
   false
-)
-saveCreatedBookmarksInput.addEventListener('click', saveCreatedBookmarks, false)
-passReferrerOnErrorInput.addEventListener('click', passReferrerOnError, false)
+);
+saveCreatedBookmarksInput.addEventListener(
+  "click",
+  saveCreatedBookmarks,
+  false
+);
+passReferrerOnErrorInput.addEventListener("click", passReferrerOnError, false);
 autoSaveExternalSaveInput.addEventListener(
-  'click',
+  "click",
   () => enableExternalSave(autoSaveExternalSaveInput),
   false
-)
+);
 saveWithCompanionInput.addEventListener(
-  'click',
+  "click",
   () => enableExternalSave(saveWithCompanionInput),
   false
-)
+);
 saveToFilesystemInput.addEventListener(
-  'click',
+  "click",
   async () =>
-    await browser.runtime.sendMessage({ method: 'downloads.disableGDrive' }),
+    await browser.runtime.sendMessage({ method: "downloads.disableGDrive" }),
   false
-)
+);
 saveToClipboardInput.addEventListener(
-  'click',
+  "click",
   async () =>
-    await browser.runtime.sendMessage({ method: 'downloads.disableGDrive' }),
+    await browser.runtime.sendMessage({ method: "downloads.disableGDrive" }),
   false
-)
+);
 saveWithCompanionInput.addEventListener(
-  'click',
+  "click",
   async () =>
-    await browser.runtime.sendMessage({ method: 'downloads.disableGDrive' }),
+    await browser.runtime.sendMessage({ method: "downloads.disableGDrive" }),
   false
-)
-addProofInput.addEventListener('click', async (event) => {
+);
+addProofInput.addEventListener("click", async (event) => {
   if (addProofInput.checked) {
-    addProofInput.checked = false
+    addProofInput.checked = false;
     if (
       await confirm(
-        browser.i18n.getMessage('optionsAddProofConfirm'),
+        browser.i18n.getMessage("optionsAddProofConfirm"),
         event.clientY - 100
       )
     ) {
-      addProofInput.checked = true
-      woleetKeyInput.disabled = false
+      addProofInput.checked = true;
+      woleetKeyInput.disabled = false;
     }
-    await update()
+    await update();
   }
-})
+});
 browser.runtime
-  .sendMessage({ method: 'config.isSync' })
-  .then((data) => (synchronizeInput.checked = data.sync))
+  .sendMessage({ method: "config.isSync" })
+  .then((data) => (synchronizeInput.checked = data.sync));
 synchronizeInput.addEventListener(
-  'click',
+  "click",
   async () => {
     if (synchronizeInput.checked) {
-      await browser.runtime.sendMessage({ method: 'config.enableSync' })
-      await refresh(DEFAULT_PROFILE_NAME)
+      await browser.runtime.sendMessage({ method: "config.enableSync" });
+      await refresh(DEFAULT_PROFILE_NAME);
     } else {
-      await browser.runtime.sendMessage({ method: 'config.disableSync' })
-      await refresh()
+      await browser.runtime.sendMessage({ method: "config.disableSync" });
+      await refresh();
     }
   },
   false
-)
+);
 document.body.onchange = async (event) => {
-  let target = event.target
+  let target = event.target;
   if (
     target != ruleUrlInput &&
     target != ruleProfileInput &&
@@ -716,542 +724,542 @@ document.body.onchange = async (event) => {
     target != passReferrerOnErrorInput
   ) {
     if (target != profileNamesInput && target != showAllProfilesInput) {
-      await update()
+      await update();
     }
     if (target == profileNamesInput) {
-      await refresh(profileNamesInput.value)
+      await refresh(profileNamesInput.value);
       if (sidePanelDisplay) {
         const tabsData = await browser.runtime.sendMessage({
-          method: 'tabsData.get',
-        })
-        tabsData.profileName = profileNamesInput.value
+          method: "tabsData.get",
+        });
+        tabsData.profileName = profileNamesInput.value;
         await browser.runtime.sendMessage({
-          method: 'tabsData.set',
+          method: "tabsData.set",
           tabsData: tabsData,
-        })
-        await browser.runtime.sendMessage({ method: 'ui.refreshMenu' })
+        });
+        await browser.runtime.sendMessage({ method: "ui.refreshMenu" });
       }
     } else {
       if (target == contextMenuEnabledInput) {
-        await browser.runtime.sendMessage({ method: 'ui.refreshMenu' })
+        await browser.runtime.sendMessage({ method: "ui.refreshMenu" });
       }
       if (target == openEditorInput) {
-        await browser.runtime.sendMessage({ method: 'ui.refreshMenu' })
+        await browser.runtime.sendMessage({ method: "ui.refreshMenu" });
       }
-      await refresh()
+      await refresh();
     }
   }
-}
-addProfileButton.title = browser.i18n.getMessage('profileAddButtonTooltip')
+};
+addProfileButton.title = browser.i18n.getMessage("profileAddButtonTooltip");
 deleteProfileButton.title = browser.i18n.getMessage(
-  'profileDeleteButtonTooltip'
-)
+  "profileDeleteButtonTooltip"
+);
 renameProfileButton.title = browser.i18n.getMessage(
-  'profileRenameButtonTooltip'
-)
+  "profileRenameButtonTooltip"
+);
 removeHiddenElementsLabel.textContent = browser.i18n.getMessage(
-  'optionRemoveHiddenElements'
-)
+  "optionRemoveHiddenElements"
+);
 removeUnusedStylesLabel.textContent = browser.i18n.getMessage(
-  'optionRemoveUnusedStyles'
-)
+  "optionRemoveUnusedStyles"
+);
 removeUnusedFontsLabel.textContent = browser.i18n.getMessage(
-  'optionRemoveUnusedFonts'
-)
-removeFramesLabel.textContent = browser.i18n.getMessage('optionRemoveFrames')
-removeImportsLabel.textContent = browser.i18n.getMessage('optionRemoveImports')
-removeScriptsLabel.textContent = browser.i18n.getMessage('optionRemoveScripts')
-saveRawPageLabel.textContent = browser.i18n.getMessage('optionSaveRawPage')
-insertMetaCSPLabel.textContent = browser.i18n.getMessage('optionInsertMetaCSP')
+  "optionRemoveUnusedFonts"
+);
+removeFramesLabel.textContent = browser.i18n.getMessage("optionRemoveFrames");
+removeImportsLabel.textContent = browser.i18n.getMessage("optionRemoveImports");
+removeScriptsLabel.textContent = browser.i18n.getMessage("optionRemoveScripts");
+saveRawPageLabel.textContent = browser.i18n.getMessage("optionSaveRawPage");
+insertMetaCSPLabel.textContent = browser.i18n.getMessage("optionInsertMetaCSP");
 saveToClipboardLabel.textContent = browser.i18n.getMessage(
-  'optionSaveToClipboard'
-)
+  "optionSaveToClipboard"
+);
 saveToFilesystemLabel.textContent = browser.i18n.getMessage(
-  'optionSaveToFilesystem'
-)
-addProofLabel.textContent = browser.i18n.getMessage('optionAddProof')
-woleetKeyLabel.textContent = browser.i18n.getMessage('optionWoleetKey')
-saveToGDriveLabel.textContent = browser.i18n.getMessage('optionSaveToGDrive')
-saveToGitHubLabel.textContent = browser.i18n.getMessage('optionSaveToGitHub')
-githubTokenLabel.textContent = browser.i18n.getMessage('optionGitHubToken')
+  "optionSaveToFilesystem"
+);
+addProofLabel.textContent = browser.i18n.getMessage("optionAddProof");
+woleetKeyLabel.textContent = browser.i18n.getMessage("optionWoleetKey");
+saveToGDriveLabel.textContent = browser.i18n.getMessage("optionSaveToGDrive");
+saveToGitHubLabel.textContent = browser.i18n.getMessage("optionSaveToGitHub");
+githubTokenLabel.textContent = browser.i18n.getMessage("optionGitHubToken");
 saveWithCompanionLabel.textContent = browser.i18n.getMessage(
-  'optionSaveWithCompanion'
-)
-compressHTMLLabel.textContent = browser.i18n.getMessage('optionCompressHTML')
-compressCSSLabel.textContent = browser.i18n.getMessage('optionCompressCSS')
+  "optionSaveWithCompanion"
+);
+compressHTMLLabel.textContent = browser.i18n.getMessage("optionCompressHTML");
+compressCSSLabel.textContent = browser.i18n.getMessage("optionCompressCSS");
 moveStylesInHeadLabel.textContent = browser.i18n.getMessage(
-  'optionMoveStylesInHead'
-)
+  "optionMoveStylesInHead"
+);
 loadDeferredImagesLabel.textContent = browser.i18n.getMessage(
-  'optionLoadDeferredImages'
-)
+  "optionLoadDeferredImages"
+);
 loadDeferredImagesMaxIdleTimeLabel.textContent = browser.i18n.getMessage(
-  'optionLoadDeferredImagesMaxIdleTime'
-)
+  "optionLoadDeferredImagesMaxIdleTime"
+);
 loadDeferredImagesKeepZoomLevelLabel.textContent = browser.i18n.getMessage(
-  'optionLoadDeferredImagesKeepZoomLevel'
-)
-addMenuEntryLabel.textContent = browser.i18n.getMessage('optionAddMenuEntry')
+  "optionLoadDeferredImagesKeepZoomLevel"
+);
+addMenuEntryLabel.textContent = browser.i18n.getMessage("optionAddMenuEntry");
 filenameTemplateLabel.textContent = browser.i18n.getMessage(
-  'optionFilenameTemplate'
-)
+  "optionFilenameTemplate"
+);
 filenameMaxLengthLabel.textContent = browser.i18n.getMessage(
-  'optionFilenameMaxLength'
-)
-shadowEnabledLabel.textContent = browser.i18n.getMessage('optionDisplayShadow')
+  "optionFilenameMaxLength"
+);
+shadowEnabledLabel.textContent = browser.i18n.getMessage("optionDisplayShadow");
 setMaxResourceSizeLabel.textContent = browser.i18n.getMessage(
-  'optionSetMaxResourceSize'
-)
+  "optionSetMaxResourceSize"
+);
 maxResourceSizeLabel.textContent = browser.i18n.getMessage(
-  'optionMaxResourceSize'
-)
+  "optionMaxResourceSize"
+);
 confirmFilenameLabel.textContent = browser.i18n.getMessage(
-  'optionConfirmFilename'
-)
+  "optionConfirmFilename"
+);
 filenameConflictActionLabel.textContent = browser.i18n.getMessage(
-  'optionFilenameConflictAction'
-)
+  "optionFilenameConflictAction"
+);
 filenameConflictActionUniquifyLabel.textContent = browser.i18n.getMessage(
-  'optionFilenameConflictActionUniquify'
-)
+  "optionFilenameConflictActionUniquify"
+);
 filenameConflictActionOverwriteLabel.textContent = browser.i18n.getMessage(
-  'optionFilenameConflictActionOverwrite'
-)
+  "optionFilenameConflictActionOverwrite"
+);
 filenameConflictActionPromptLabel.textContent = browser.i18n.getMessage(
-  'optionFilenameConflictActionPrompt'
-)
+  "optionFilenameConflictActionPrompt"
+);
 filenameConflictActionSkipLabel.textContent = browser.i18n.getMessage(
-  'optionFilenameConflictActionSkip'
-)
-removeAudioLabel.textContent = browser.i18n.getMessage('optionRemoveAudio')
-removeVideoLabel.textContent = browser.i18n.getMessage('optionRemoveVideo')
+  "optionFilenameConflictActionSkip"
+);
+removeAudioLabel.textContent = browser.i18n.getMessage("optionRemoveAudio");
+removeVideoLabel.textContent = browser.i18n.getMessage("optionRemoveVideo");
 displayInfobarLabel.textContent = browser.i18n.getMessage(
-  'optionDisplayInfobar'
-)
-displayStatsLabel.textContent = browser.i18n.getMessage('optionDisplayStats')
+  "optionDisplayInfobar"
+);
+displayStatsLabel.textContent = browser.i18n.getMessage("optionDisplayStats");
 backgroundSaveLabel.textContent = browser.i18n.getMessage(
-  'optionBackgroundSave'
-)
-autoSaveDelayLabel.textContent = browser.i18n.getMessage('optionAutoSaveDelay')
-autoSaveLoadLabel.textContent = browser.i18n.getMessage('optionAutoSaveLoad')
+  "optionBackgroundSave"
+);
+autoSaveDelayLabel.textContent = browser.i18n.getMessage("optionAutoSaveDelay");
+autoSaveLoadLabel.textContent = browser.i18n.getMessage("optionAutoSaveLoad");
 autoSaveUnloadLabel.textContent = browser.i18n.getMessage(
-  'optionAutoSaveUnload'
-)
+  "optionAutoSaveUnload"
+);
 autoSaveLoadOrUnloadLabel.textContent = browser.i18n.getMessage(
-  'optionAutoSaveLoadOrUnload'
-)
+  "optionAutoSaveLoadOrUnload"
+);
 autoSaveDiscardLabel.textContent = browser.i18n.getMessage(
-  'optionAutoSaveDiscard'
-)
+  "optionAutoSaveDiscard"
+);
 autoSaveRemoveLabel.textContent = browser.i18n.getMessage(
-  'optionAutoSaveRemove'
-)
+  "optionAutoSaveRemove"
+);
 autoSaveRepeatLabel.textContent = browser.i18n.getMessage(
-  'optionAutoSaveRepeat'
-)
+  "optionAutoSaveRepeat"
+);
 autoSaveRepeatDelayLabel.textContent = browser.i18n.getMessage(
-  'optionAutoSaveRepeatDelay'
-)
+  "optionAutoSaveRepeatDelay"
+);
 autoSaveExternalSaveLabel.textContent = browser.i18n.getMessage(
-  'optionAutoSaveExternalSave'
-)
+  "optionAutoSaveExternalSave"
+);
 removeAlternativeFontsLabel.textContent = browser.i18n.getMessage(
-  'optionRemoveAlternativeFonts'
-)
+  "optionRemoveAlternativeFonts"
+);
 removeAlternativeImagesLabel.textContent = browser.i18n.getMessage(
-  'optionRemoveAlternativeImages'
-)
+  "optionRemoveAlternativeImages"
+);
 removeAlternativeMediasLabel.textContent = browser.i18n.getMessage(
-  'optionRemoveAlternativeMedias'
-)
+  "optionRemoveAlternativeMedias"
+);
 saveCreatedBookmarksLabel.textContent = browser.i18n.getMessage(
-  'optionSaveCreatedBookmarks'
-)
+  "optionSaveCreatedBookmarks"
+);
 passReferrerOnErrorLabel.textContent = browser.i18n.getMessage(
-  'optionPassReferrerOnError'
-)
+  "optionPassReferrerOnError"
+);
 replaceBookmarkURLLabel.textContent = browser.i18n.getMessage(
-  'optionReplaceBookmarkURL'
-)
+  "optionReplaceBookmarkURL"
+);
 allowedBookmarkFoldersLabel.textContent = browser.i18n.getMessage(
-  'optionAllowedBookmarkFolders'
-)
+  "optionAllowedBookmarkFolders"
+);
 ignoredBookmarkFoldersLabel.textContent = browser.i18n.getMessage(
-  'optionIgnoredBookmarkFolders'
-)
+  "optionIgnoredBookmarkFolders"
+);
 groupDuplicateImagesLabel.textContent = browser.i18n.getMessage(
-  'optionGroupDuplicateImages'
-)
-titleLabel.textContent = browser.i18n.getMessage('optionsTitle')
+  "optionGroupDuplicateImages"
+);
+titleLabel.textContent = browser.i18n.getMessage("optionsTitle");
 userInterfaceLabel.textContent = browser.i18n.getMessage(
-  'optionsUserInterfaceSubTitle'
-)
-filenameLabel.textContent = browser.i18n.getMessage('optionsFileNameSubTitle')
+  "optionsUserInterfaceSubTitle"
+);
+filenameLabel.textContent = browser.i18n.getMessage("optionsFileNameSubTitle");
 htmlContentLabel.textContent = browser.i18n.getMessage(
-  'optionsHTMLContentSubTitle'
-)
-imagesLabel.textContent = browser.i18n.getMessage('optionsImagesSubTitle')
+  "optionsHTMLContentSubTitle"
+);
+imagesLabel.textContent = browser.i18n.getMessage("optionsImagesSubTitle");
 stylesheetsLabel.textContent = browser.i18n.getMessage(
-  'optionsStylesheetsSubTitle'
-)
-fontsLabel.textContent = browser.i18n.getMessage('optionsFontsSubTitle')
+  "optionsStylesheetsSubTitle"
+);
+fontsLabel.textContent = browser.i18n.getMessage("optionsFontsSubTitle");
 otherResourcesLabel.textContent = browser.i18n.getMessage(
-  'optionsOtherResourcesSubTitle'
-)
+  "optionsOtherResourcesSubTitle"
+);
 destinationLabel.textContent = browser.i18n.getMessage(
-  'optionsDestionationSubTitle'
-)
-bookmarksLabel.textContent = browser.i18n.getMessage('optionsBookmarkSubTitle')
-autoSaveLabel.textContent = browser.i18n.getMessage('optionsAutoSaveSubTitle')
-miscLabel.textContent = browser.i18n.getMessage('optionsMiscSubTitle')
-helpLabel.textContent = browser.i18n.getMessage('optionsHelpLink')
+  "optionsDestionationSubTitle"
+);
+bookmarksLabel.textContent = browser.i18n.getMessage("optionsBookmarkSubTitle");
+autoSaveLabel.textContent = browser.i18n.getMessage("optionsAutoSaveSubTitle");
+miscLabel.textContent = browser.i18n.getMessage("optionsMiscSubTitle");
+helpLabel.textContent = browser.i18n.getMessage("optionsHelpLink");
 infobarTemplateLabel.textContent = browser.i18n.getMessage(
-  'optionInfobarTemplate'
-)
+  "optionInfobarTemplate"
+);
 blockMixedContentLabel.textContent = browser.i18n.getMessage(
-  'optionBlockMixedContent'
-)
+  "optionBlockMixedContent"
+);
 saveOriginalURLsLabel.textContent = browser.i18n.getMessage(
-  'optionSaveOriginalURLs'
-)
+  "optionSaveOriginalURLs"
+);
 includeInfobarLabel.textContent = browser.i18n.getMessage(
-  'optionIncludeInfobar'
-)
+  "optionIncludeInfobar"
+);
 confirmInfobarLabel.textContent = browser.i18n.getMessage(
-  'optionConfirmInfobar'
-)
-autoCloseLabel.textContent = browser.i18n.getMessage('optionAutoClose')
-editorLabel.textContent = browser.i18n.getMessage('optionsEditorSubTitle')
-openEditorLabel.textContent = browser.i18n.getMessage('optionOpenEditor')
-openSavedPageLabel.textContent = browser.i18n.getMessage('optionOpenSavedPage')
+  "optionConfirmInfobar"
+);
+autoCloseLabel.textContent = browser.i18n.getMessage("optionAutoClose");
+editorLabel.textContent = browser.i18n.getMessage("optionsEditorSubTitle");
+openEditorLabel.textContent = browser.i18n.getMessage("optionOpenEditor");
+openSavedPageLabel.textContent = browser.i18n.getMessage("optionOpenSavedPage");
 autoOpenEditorLabel.textContent = browser.i18n.getMessage(
-  'optionAutoOpenEditor'
-)
+  "optionAutoOpenEditor"
+);
 defaultEditorModeLabel.textContent = browser.i18n.getMessage(
-  'optionDefaultEditorMode'
-)
+  "optionDefaultEditorMode"
+);
 defaultEditorModeNormalLabel.textContent = browser.i18n.getMessage(
-  'optionDefaultEditorModeNormal'
-)
+  "optionDefaultEditorModeNormal"
+);
 defaultEditorModeEditLabel.textContent = browser.i18n.getMessage(
-  'optionDefaultEditorModeEdit'
-)
+  "optionDefaultEditorModeEdit"
+);
 defaultEditorModeFormatLabel.textContent = browser.i18n.getMessage(
-  'optionDefaultEditorModeFormat'
-)
+  "optionDefaultEditorModeFormat"
+);
 defaultEditorModeCutLabel.textContent = browser.i18n.getMessage(
-  'optionDefaultEditorModeCut'
-)
+  "optionDefaultEditorModeCut"
+);
 defaultEditorModeCutExternalLabel.textContent = browser.i18n.getMessage(
-  'optionDefaultEditorModeCutExternal'
-)
+  "optionDefaultEditorModeCutExternal"
+);
 applySystemThemeLabel.textContent = browser.i18n.getMessage(
-  'optionApplySystemTheme'
-)
+  "optionApplySystemTheme"
+);
 warnUnsavedPageLabel.textContent = browser.i18n.getMessage(
-  'optionWarnUnsavedPage'
-)
-resetButton.textContent = browser.i18n.getMessage('optionsResetButton')
-exportButton.textContent = browser.i18n.getMessage('optionsExportButton')
-importButton.textContent = browser.i18n.getMessage('optionsImportButton')
-resetButton.title = browser.i18n.getMessage('optionsResetTooltip')
+  "optionWarnUnsavedPage"
+);
+resetButton.textContent = browser.i18n.getMessage("optionsResetButton");
+exportButton.textContent = browser.i18n.getMessage("optionsExportButton");
+importButton.textContent = browser.i18n.getMessage("optionsImportButton");
+resetButton.title = browser.i18n.getMessage("optionsResetTooltip");
 autoSettingsLabel.textContent = browser.i18n.getMessage(
-  'optionsAutoSettingsSubTitle'
-)
+  "optionsAutoSettingsSubTitle"
+);
 autoSettingsUrlLabel.textContent = browser.i18n.getMessage(
-  'optionsAutoSettingsUrl'
-)
+  "optionsAutoSettingsUrl"
+);
 autoSettingsProfileLabel.textContent = browser.i18n.getMessage(
-  'optionsAutoSettingsProfile'
-)
+  "optionsAutoSettingsProfile"
+);
 autoSettingsAutoSaveProfileLabel.textContent = browser.i18n.getMessage(
-  'optionsAutoSettingsAutoSaveProfile'
-)
-ruleAddButton.title = browser.i18n.getMessage('optionsAddRuleTooltip')
-ruleEditButton.title = browser.i18n.getMessage('optionsValidateChangesTooltip')
+  "optionsAutoSettingsAutoSaveProfile"
+);
+ruleAddButton.title = browser.i18n.getMessage("optionsAddRuleTooltip");
+ruleEditButton.title = browser.i18n.getMessage("optionsValidateChangesTooltip");
 rulesDeleteAllButton.title = browser.i18n.getMessage(
-  'optionsDeleteRulesTooltip'
-)
+  "optionsDeleteRulesTooltip"
+);
 showAllProfilesLabel.textContent = browser.i18n.getMessage(
-  'optionsAutoSettingsShowAllProfiles'
-)
+  "optionsAutoSettingsShowAllProfiles"
+);
 showAutoSaveProfileLabel.textContent = browser.i18n.getMessage(
-  'optionsAutoSettingsShowAutoSaveProfile'
-)
+  "optionsAutoSettingsShowAutoSaveProfile"
+);
 ruleUrlInput.placeholder = ruleEditUrlInput.placeholder =
-  browser.i18n.getMessage('optionsAutoSettingsUrlPlaceholder')
-synchronizeLabel.textContent = browser.i18n.getMessage('optionSynchronize')
-resetAllButton.textContent = browser.i18n.getMessage('optionsResetAllButton')
+  browser.i18n.getMessage("optionsAutoSettingsUrlPlaceholder");
+synchronizeLabel.textContent = browser.i18n.getMessage("optionSynchronize");
+resetAllButton.textContent = browser.i18n.getMessage("optionsResetAllButton");
 resetCurrentButton.textContent = browser.i18n.getMessage(
-  'optionsResetCurrentButton'
-)
+  "optionsResetCurrentButton"
+);
 resetCancelButton.textContent =
   promptCancelButton.textContent =
   cancelButton.textContent =
-    browser.i18n.getMessage('optionsCancelButton')
+    browser.i18n.getMessage("optionsCancelButton");
 confirmButton.textContent = promptConfirmButton.textContent =
-  browser.i18n.getMessage('optionsOKButton')
-document.getElementById('resetConfirmLabel').textContent =
-  browser.i18n.getMessage('optionsResetConfirm')
-if (location.href.endsWith('#')) {
-  document.querySelector('.new-window-link').remove()
-  document.documentElement.classList.add('maximized')
+  browser.i18n.getMessage("optionsOKButton");
+document.getElementById("resetConfirmLabel").textContent =
+  browser.i18n.getMessage("optionsResetConfirm");
+if (location.href.endsWith("#")) {
+  document.querySelector(".new-window-link").remove();
+  document.documentElement.classList.add("maximized");
 }
-let tabsData
-browser.runtime.sendMessage({ method: 'tabsData.get' }).then((allTabsData) => {
-  tabsData = allTabsData
-  return refresh(tabsData.profileName)
-})
-getHelpContents()
+let tabsData;
+browser.runtime.sendMessage({ method: "tabsData.get" }).then((allTabsData) => {
+  tabsData = allTabsData;
+  return refresh(tabsData.profileName);
+});
+getHelpContents();
 
 async function refresh(profileName) {
   const [profiles, rules, companionState] = await Promise.all([
-    browser.runtime.sendMessage({ method: 'config.getProfiles' }),
-    browser.runtime.sendMessage({ method: 'config.getRules' }),
-    browser.runtime.sendMessage({ method: 'companion.state' }),
-  ])
+    browser.runtime.sendMessage({ method: "config.getProfiles" }),
+    browser.runtime.sendMessage({ method: "config.getRules" }),
+    browser.runtime.sendMessage({ method: "companion.state" }),
+  ]);
   const selectedProfileName =
-    profileName || profileNamesInput.value || DEFAULT_PROFILE_NAME
-  Array.from(profileNamesInput.childNodes).forEach((node) => node.remove())
-  profileNamesInput.options.length = 0
-  ruleProfileInput.options.length = 0
-  ruleAutoSaveProfileInput.options.length = 0
-  ruleEditProfileInput.options.length = 0
-  ruleEditAutoSaveProfileInput.options.length = 0
-  let optionElement = document.createElement('option')
-  optionElement.value = DEFAULT_PROFILE_NAME
-  optionElement.textContent = browser.i18n.getMessage('profileDefaultSettings')
-  ;[CURRENT_PROFILE_NAME]
+    profileName || profileNamesInput.value || DEFAULT_PROFILE_NAME;
+  Array.from(profileNamesInput.childNodes).forEach((node) => node.remove());
+  profileNamesInput.options.length = 0;
+  ruleProfileInput.options.length = 0;
+  ruleAutoSaveProfileInput.options.length = 0;
+  ruleEditProfileInput.options.length = 0;
+  ruleEditAutoSaveProfileInput.options.length = 0;
+  let optionElement = document.createElement("option");
+  optionElement.value = DEFAULT_PROFILE_NAME;
+  optionElement.textContent = browser.i18n.getMessage("profileDefaultSettings");
+  [CURRENT_PROFILE_NAME]
     .concat(...Object.keys(profiles))
     .forEach((profileName) => {
-      const optionElement = document.createElement('option')
-      optionElement.value = optionElement.textContent = profileName
+      const optionElement = document.createElement("option");
+      optionElement.value = optionElement.textContent = profileName;
       if (profileName == DEFAULT_PROFILE_NAME) {
         optionElement.textContent = browser.i18n.getMessage(
-          'profileDefaultSettings'
-        )
+          "profileDefaultSettings"
+        );
       }
       if (profileName != CURRENT_PROFILE_NAME) {
-        profileNamesInput.appendChild(optionElement)
+        profileNamesInput.appendChild(optionElement);
       }
-      ruleProfileInput.appendChild(optionElement.cloneNode(true))
-      ruleAutoSaveProfileInput.appendChild(optionElement.cloneNode(true))
-      ruleEditProfileInput.appendChild(optionElement.cloneNode(true))
-      ruleEditAutoSaveProfileInput.appendChild(optionElement.cloneNode(true))
-    })
-  profileNamesInput.disabled = profileNamesInput.options.length == 1
-  optionElement = document.createElement('option')
-  optionElement.value = DISABLED_PROFILE_NAME
-  optionElement.textContent = browser.i18n.getMessage('profileDisabled')
-  ruleAutoSaveProfileInput.appendChild(optionElement)
-  ruleEditAutoSaveProfileInput.appendChild(optionElement.cloneNode(true))
-  const rulesDataElement = rulesElement.querySelector('.rules-data')
+      ruleProfileInput.appendChild(optionElement.cloneNode(true));
+      ruleAutoSaveProfileInput.appendChild(optionElement.cloneNode(true));
+      ruleEditProfileInput.appendChild(optionElement.cloneNode(true));
+      ruleEditAutoSaveProfileInput.appendChild(optionElement.cloneNode(true));
+    });
+  profileNamesInput.disabled = profileNamesInput.options.length == 1;
+  optionElement = document.createElement("option");
+  optionElement.value = DISABLED_PROFILE_NAME;
+  optionElement.textContent = browser.i18n.getMessage("profileDisabled");
+  ruleAutoSaveProfileInput.appendChild(optionElement);
+  ruleEditAutoSaveProfileInput.appendChild(optionElement.cloneNode(true));
+  const rulesDataElement = rulesElement.querySelector(".rules-data");
   Array.from(rulesDataElement.childNodes).forEach(
     (node) =>
-      (!node.className || !node.className.includes('rule-edit')) &&
+      (!node.className || !node.className.includes("rule-edit")) &&
       node.remove()
-  )
-  const editURLElement = rulesElement.querySelector('.rule-edit')
-  createURLElement.hidden = false
-  editURLElement.hidden = true
-  ruleProfileInput.value = ruleAutoSaveProfileInput.value = selectedProfileName
-  let rulesDisplayed
+  );
+  const editURLElement = rulesElement.querySelector(".rule-edit");
+  createURLElement.hidden = false;
+  editURLElement.hidden = true;
+  ruleProfileInput.value = ruleAutoSaveProfileInput.value = selectedProfileName;
+  let rulesDisplayed;
   rules.forEach((rule) => {
     if (
       showAllProfilesInput.checked ||
       selectedProfileName == rule.profile ||
       selectedProfileName == rule.autoSaveProfile
     ) {
-      rulesDisplayed = true
+      rulesDisplayed = true;
       const ruleElement = rulesElement
-        .querySelector('.rule-view')
-        .cloneNode(true)
-      const ruleUrlElement = ruleElement.querySelector('.rule-url')
-      const ruleProfileElement = ruleElement.querySelector('.rule-profile')
+        .querySelector(".rule-view")
+        .cloneNode(true);
+      const ruleUrlElement = ruleElement.querySelector(".rule-url");
+      const ruleProfileElement = ruleElement.querySelector(".rule-profile");
       const ruleAutoSaveProfileElement = ruleElement.querySelector(
-        '.rule-autosave-profile'
-      )
-      ruleUrlElement.textContent = ruleUrlElement.title = rule.url
+        ".rule-autosave-profile"
+      );
+      ruleUrlElement.textContent = ruleUrlElement.title = rule.url;
       ruleProfileElement.textContent = ruleProfileElement.title =
-        getProfileText(rule.profile)
+        getProfileText(rule.profile);
       ruleAutoSaveProfileElement.textContent =
-        ruleAutoSaveProfileElement.title = getProfileText(rule.autoSaveProfile)
-      ruleElement.hidden = false
-      ruleElement.className = 'tr data'
-      rulesDataElement.appendChild(ruleElement)
-      const ruleDeleteButton = ruleElement.querySelector('.rule-delete-button')
-      const ruleUpdateButton = ruleElement.querySelector('.rule-update-button')
+        ruleAutoSaveProfileElement.title = getProfileText(rule.autoSaveProfile);
+      ruleElement.hidden = false;
+      ruleElement.className = "tr data";
+      rulesDataElement.appendChild(ruleElement);
+      const ruleDeleteButton = ruleElement.querySelector(".rule-delete-button");
+      const ruleUpdateButton = ruleElement.querySelector(".rule-update-button");
       ruleDeleteButton.title = browser.i18n.getMessage(
-        'optionsDeleteRuleTooltip'
-      )
+        "optionsDeleteRuleTooltip"
+      );
       ruleDeleteButton.addEventListener(
-        'click',
+        "click",
         async (event) => {
           if (
             await confirm(
-              browser.i18n.getMessage('optionsDeleteRuleConfirm'),
+              browser.i18n.getMessage("optionsDeleteRuleConfirm"),
               event.clientY - 100
             )
           ) {
             await browser.runtime.sendMessage({
-              method: 'config.deleteRule',
+              method: "config.deleteRule",
               url: rule.url,
-            })
-            await refresh()
-            await refreshExternalComponents()
+            });
+            await refresh();
+            await refreshExternalComponents();
           }
         },
         false
-      )
+      );
       ruleUpdateButton.title = browser.i18n.getMessage(
-        'optionsUpdateRuleTooltip'
-      )
+        "optionsUpdateRuleTooltip"
+      );
       ruleUpdateButton.addEventListener(
-        'click',
+        "click",
         async () => {
           if (editURLElement.hidden) {
-            createURLElement.hidden = true
-            editURLElement.hidden = false
-            rulesDataElement.replaceChild(editURLElement, ruleElement)
-            ruleEditUrlInput.value = rule.url
-            ruleEditProfileInput.value = rule.profile
-            ruleEditAutoSaveProfileInput.value = rule.autoSaveProfile
-            ruleEditUrlInput.focus()
+            createURLElement.hidden = true;
+            editURLElement.hidden = false;
+            rulesDataElement.replaceChild(editURLElement, ruleElement);
+            ruleEditUrlInput.value = rule.url;
+            ruleEditProfileInput.value = rule.profile;
+            ruleEditAutoSaveProfileInput.value = rule.autoSaveProfile;
+            ruleEditUrlInput.focus();
             editURLElement.onsubmit = async (event) => {
-              event.preventDefault()
-              rulesElement.appendChild(editURLElement)
+              event.preventDefault();
+              rulesElement.appendChild(editURLElement);
               await browser.runtime.sendMessage({
-                method: 'config.updateRule',
+                method: "config.updateRule",
                 url: rule.url,
                 newUrl: ruleEditUrlInput.value,
                 profileName: ruleEditProfileInput.value,
                 autoSaveProfileName: ruleEditAutoSaveProfileInput.value,
-              })
-              await refresh()
-              await refreshExternalComponents()
-              ruleUrlInput.focus()
-            }
+              });
+              await refresh();
+              await refreshExternalComponents();
+              ruleUrlInput.focus();
+            };
           }
         },
         false
-      )
+      );
     }
-  })
-  rulesDeleteAllButton.disabled = !rulesDisplayed
-  rulesElement.appendChild(createURLElement)
-  profileNamesInput.value = selectedProfileName
+  });
+  rulesDeleteAllButton.disabled = !rulesDisplayed;
+  rulesElement.appendChild(createURLElement);
+  profileNamesInput.value = selectedProfileName;
   renameProfileButton.disabled = deleteProfileButton.disabled =
-    profileNamesInput.value == DEFAULT_PROFILE_NAME
-  const profileOptions = profiles[selectedProfileName]
-  removeHiddenElementsInput.checked = profileOptions.removeHiddenElements
-  removeUnusedStylesInput.checked = profileOptions.removeUnusedStyles
-  removeUnusedFontsInput.checked = profileOptions.removeUnusedFonts
-  removeFramesInput.checked = profileOptions.removeFrames
-  removeImportsInput.checked = profileOptions.removeImports
-  removeScriptsInput.checked = profileOptions.removeScripts
-  saveRawPageInput.checked = profileOptions.saveRawPage
-  insertMetaCSPInput.checked = profileOptions.insertMetaCSP
-  saveToClipboardInput.checked = profileOptions.saveToClipboard
-  addProofInput.checked = profileOptions.addProof
-  woleetKeyInput.value = profileOptions.woleetKey
-  woleetKeyInput.disabled = !profileOptions.addProof
-  saveToGDriveInput.checked = profileOptions.saveToGDrive
-  saveToGitHubInput.checked = profileOptions.saveToGitHub
-  githubTokenInput.value = profileOptions.githubToken
-  githubTokenInput.disabled = !profileOptions.saveToGitHub
-  saveWithCompanionInput.checked = profileOptions.saveWithCompanion
+    profileNamesInput.value == DEFAULT_PROFILE_NAME;
+  const profileOptions = profiles[selectedProfileName];
+  removeHiddenElementsInput.checked = profileOptions.removeHiddenElements;
+  removeUnusedStylesInput.checked = profileOptions.removeUnusedStyles;
+  removeUnusedFontsInput.checked = profileOptions.removeUnusedFonts;
+  removeFramesInput.checked = profileOptions.removeFrames;
+  removeImportsInput.checked = profileOptions.removeImports;
+  removeScriptsInput.checked = profileOptions.removeScripts;
+  saveRawPageInput.checked = profileOptions.saveRawPage;
+  insertMetaCSPInput.checked = profileOptions.insertMetaCSP;
+  saveToClipboardInput.checked = profileOptions.saveToClipboard;
+  addProofInput.checked = profileOptions.addProof;
+  woleetKeyInput.value = profileOptions.woleetKey;
+  woleetKeyInput.disabled = !profileOptions.addProof;
+  saveToGDriveInput.checked = profileOptions.saveToGDrive;
+  saveToGitHubInput.checked = profileOptions.saveToGitHub;
+  githubTokenInput.value = profileOptions.githubToken;
+  githubTokenInput.disabled = !profileOptions.saveToGitHub;
+  saveWithCompanionInput.checked = profileOptions.saveWithCompanion;
   saveToFilesystemInput.checked =
     !profileOptions.saveToGDrive &&
     !profileOptions.saveToGitHub &&
     !profileOptions.saveWithCompanion &&
-    !saveToClipboardInput.checked
-  compressHTMLInput.checked = profileOptions.compressHTML
-  compressCSSInput.checked = profileOptions.compressCSS
-  moveStylesInHeadInput.checked = profileOptions.moveStylesInHead
-  loadDeferredImagesInput.checked = profileOptions.loadDeferredImages
+    !saveToClipboardInput.checked;
+  compressHTMLInput.checked = profileOptions.compressHTML;
+  compressCSSInput.checked = profileOptions.compressCSS;
+  moveStylesInHeadInput.checked = profileOptions.moveStylesInHead;
+  loadDeferredImagesInput.checked = profileOptions.loadDeferredImages;
   loadDeferredImagesMaxIdleTimeInput.value =
-    profileOptions.loadDeferredImagesMaxIdleTime
+    profileOptions.loadDeferredImagesMaxIdleTime;
   loadDeferredImagesKeepZoomLevelInput.checked =
-    profileOptions.loadDeferredImagesKeepZoomLevel
+    profileOptions.loadDeferredImagesKeepZoomLevel;
   loadDeferredImagesKeepZoomLevelInput.disabled =
-    !profileOptions.loadDeferredImages
+    !profileOptions.loadDeferredImages;
   loadDeferredImagesMaxIdleTimeInput.disabled =
-    !profileOptions.loadDeferredImages
-  contextMenuEnabledInput.checked = profileOptions.contextMenuEnabled
-  filenameTemplateInput.value = profileOptions.filenameTemplate
-  filenameMaxLengthInput.value = profileOptions.filenameMaxLength
-  shadowEnabledInput.checked = profileOptions.shadowEnabled
-  maxResourceSizeEnabledInput.checked = profileOptions.maxResourceSizeEnabled
-  maxResourceSizeInput.value = profileOptions.maxResourceSize
-  maxResourceSizeInput.disabled = !profileOptions.maxResourceSizeEnabled
-  confirmFilenameInput.checked = profileOptions.confirmFilename
-  filenameConflictActionInput.value = profileOptions.filenameConflictAction
-  removeAudioSrcInput.checked = profileOptions.removeAudioSrc
-  removeVideoSrcInput.checked = profileOptions.removeVideoSrc
-  displayInfobarInput.checked = profileOptions.displayInfobar
-  displayStatsInput.checked = profileOptions.displayStats
-  backgroundSaveInput.checked = profileOptions.backgroundSave
-  autoSaveDelayInput.value = profileOptions.autoSaveDelay
+    !profileOptions.loadDeferredImages;
+  contextMenuEnabledInput.checked = profileOptions.contextMenuEnabled;
+  filenameTemplateInput.value = profileOptions.filenameTemplate;
+  filenameMaxLengthInput.value = profileOptions.filenameMaxLength;
+  shadowEnabledInput.checked = profileOptions.shadowEnabled;
+  maxResourceSizeEnabledInput.checked = profileOptions.maxResourceSizeEnabled;
+  maxResourceSizeInput.value = profileOptions.maxResourceSize;
+  maxResourceSizeInput.disabled = !profileOptions.maxResourceSizeEnabled;
+  confirmFilenameInput.checked = profileOptions.confirmFilename;
+  filenameConflictActionInput.value = profileOptions.filenameConflictAction;
+  removeAudioSrcInput.checked = profileOptions.removeAudioSrc;
+  removeVideoSrcInput.checked = profileOptions.removeVideoSrc;
+  displayInfobarInput.checked = profileOptions.displayInfobar;
+  displayStatsInput.checked = profileOptions.displayStats;
+  backgroundSaveInput.checked = profileOptions.backgroundSave;
+  autoSaveDelayInput.value = profileOptions.autoSaveDelay;
   autoSaveLoadInput.checked =
-    !profileOptions.autoSaveLoadOrUnload && profileOptions.autoSaveLoad
-  autoSaveLoadOrUnloadInput.checked = profileOptions.autoSaveLoadOrUnload
+    !profileOptions.autoSaveLoadOrUnload && profileOptions.autoSaveLoad;
+  autoSaveLoadOrUnloadInput.checked = profileOptions.autoSaveLoadOrUnload;
   autoSaveUnloadInput.checked =
-    !profileOptions.autoSaveLoadOrUnload && profileOptions.autoSaveUnload
-  autoSaveLoadInput.disabled = profileOptions.autoSaveLoadOrUnload
-  autoSaveUnloadInput.disabled = profileOptions.autoSaveLoadOrUnload
-  autoSaveDiscardInput.checked = profileOptions.autoSaveDiscard
-  autoSaveRemoveInput.checked = profileOptions.autoSaveRemove
-  autoSaveRepeatInput.checked = profileOptions.autoSaveRepeat
-  autoSaveRepeatDelayInput.value = profileOptions.autoSaveRepeatDelay
-  autoSaveRepeatDelayInput.disabled = !profileOptions.autoSaveRepeat
-  autoSaveExternalSaveInput.checked = profileOptions.autoSaveExternalSave
-  autoSaveExternalSaveInput.parentElement.hidden = !companionState.enabled
-  removeAlternativeFontsInput.checked = profileOptions.removeAlternativeFonts
-  removeAlternativeImagesInput.checked = profileOptions.removeAlternativeImages
-  groupDuplicateImagesInput.checked = profileOptions.groupDuplicateImages
-  removeAlternativeMediasInput.checked = profileOptions.removeAlternativeMedias
-  saveCreatedBookmarksInput.checked = profileOptions.saveCreatedBookmarks
-  passReferrerOnErrorInput.checked = profileOptions.passReferrerOnError
-  replaceBookmarkURLInput.checked = profileOptions.replaceBookmarkURL
-  replaceBookmarkURLInput.disabled = !profileOptions.saveCreatedBookmarks
+    !profileOptions.autoSaveLoadOrUnload && profileOptions.autoSaveUnload;
+  autoSaveLoadInput.disabled = profileOptions.autoSaveLoadOrUnload;
+  autoSaveUnloadInput.disabled = profileOptions.autoSaveLoadOrUnload;
+  autoSaveDiscardInput.checked = profileOptions.autoSaveDiscard;
+  autoSaveRemoveInput.checked = profileOptions.autoSaveRemove;
+  autoSaveRepeatInput.checked = profileOptions.autoSaveRepeat;
+  autoSaveRepeatDelayInput.value = profileOptions.autoSaveRepeatDelay;
+  autoSaveRepeatDelayInput.disabled = !profileOptions.autoSaveRepeat;
+  autoSaveExternalSaveInput.checked = profileOptions.autoSaveExternalSave;
+  autoSaveExternalSaveInput.parentElement.hidden = !companionState.enabled;
+  removeAlternativeFontsInput.checked = profileOptions.removeAlternativeFonts;
+  removeAlternativeImagesInput.checked = profileOptions.removeAlternativeImages;
+  groupDuplicateImagesInput.checked = profileOptions.groupDuplicateImages;
+  removeAlternativeMediasInput.checked = profileOptions.removeAlternativeMedias;
+  saveCreatedBookmarksInput.checked = profileOptions.saveCreatedBookmarks;
+  passReferrerOnErrorInput.checked = profileOptions.passReferrerOnError;
+  replaceBookmarkURLInput.checked = profileOptions.replaceBookmarkURL;
+  replaceBookmarkURLInput.disabled = !profileOptions.saveCreatedBookmarks;
   allowedBookmarkFoldersInput.value = profileOptions.allowedBookmarkFolders
-    .map((folder) => folder.replace(/,/g, '\\,'))
-    .join(',') // eslint-disable-line no-useless-escape
-  allowedBookmarkFoldersInput.disabled = !profileOptions.saveCreatedBookmarks
+    .map((folder) => folder.replace(/,/g, "\\,"))
+    .join(","); // eslint-disable-line no-useless-escape
+  allowedBookmarkFoldersInput.disabled = !profileOptions.saveCreatedBookmarks;
   ignoredBookmarkFoldersInput.value = profileOptions.ignoredBookmarkFolders
-    .map((folder) => folder.replace(/,/g, '\\,'))
-    .join(',') // eslint-disable-line no-useless-escape
-  ignoredBookmarkFoldersInput.disabled = !profileOptions.saveCreatedBookmarks
-  infobarTemplateInput.value = profileOptions.infobarTemplate
-  blockMixedContentInput.checked = profileOptions.blockMixedContent
-  saveOriginalURLsInput.checked = profileOptions.saveOriginalURLs
-  includeInfobarInput.checked = profileOptions.includeInfobar
-  confirmInfobarInput.checked = profileOptions.confirmInfobarContent
-  autoCloseInput.checked = profileOptions.autoClose
-  openEditorInput.checked = profileOptions.openEditor
-  openSavedPageInput.checked = profileOptions.openSavedPage
-  autoOpenEditorInput.checked = profileOptions.autoOpenEditor
-  defaultEditorModeInput.value = profileOptions.defaultEditorMode
-  applySystemThemeInput.checked = profileOptions.applySystemTheme
-  warnUnsavedPageInput.checked = profileOptions.warnUnsavedPage
+    .map((folder) => folder.replace(/,/g, "\\,"))
+    .join(","); // eslint-disable-line no-useless-escape
+  ignoredBookmarkFoldersInput.disabled = !profileOptions.saveCreatedBookmarks;
+  infobarTemplateInput.value = profileOptions.infobarTemplate;
+  blockMixedContentInput.checked = profileOptions.blockMixedContent;
+  saveOriginalURLsInput.checked = profileOptions.saveOriginalURLs;
+  includeInfobarInput.checked = profileOptions.includeInfobar;
+  confirmInfobarInput.checked = profileOptions.confirmInfobarContent;
+  autoCloseInput.checked = profileOptions.autoClose;
+  openEditorInput.checked = profileOptions.openEditor;
+  openSavedPageInput.checked = profileOptions.openSavedPage;
+  autoOpenEditorInput.checked = profileOptions.autoOpenEditor;
+  defaultEditorModeInput.value = profileOptions.defaultEditorMode;
+  applySystemThemeInput.checked = profileOptions.applySystemTheme;
+  warnUnsavedPageInput.checked = profileOptions.warnUnsavedPage;
 }
 
 function getProfileText(profileName) {
   return profileName == DEFAULT_PROFILE_NAME
-    ? browser.i18n.getMessage('profileDefaultSettings')
+    ? browser.i18n.getMessage("profileDefaultSettings")
     : profileName == DISABLED_PROFILE_NAME
-    ? browser.i18n.getMessage('profileDisabled')
-    : profileName
+    ? browser.i18n.getMessage("profileDisabled")
+    : profileName;
 }
 
 async function update() {
   try {
-    await pendingSave
+    await pendingSave;
   } catch (error) {
     // ignored
   }
   pendingSave = browser.runtime.sendMessage({
-    method: 'config.updateProfile',
+    method: "config.updateProfile",
     profileName: profileNamesInput.value,
     profile: {
       removeHiddenElements: removeHiddenElementsInput.checked,
@@ -1308,13 +1316,13 @@ async function update() {
       passReferrerOnError: passReferrerOnErrorInput.checked,
       replaceBookmarkURL: replaceBookmarkURLInput.checked,
       allowedBookmarkFolders: allowedBookmarkFoldersInput.value
-        .replace(/([^\\]),/g, '$1 ,')
+        .replace(/([^\\]),/g, "$1 ,")
         .split(/[^\\],/)
-        .map((folder) => folder.replace(/\\,/g, ',')),
+        .map((folder) => folder.replace(/\\,/g, ",")),
       ignoredBookmarkFolders: ignoredBookmarkFoldersInput.value
-        .replace(/([^\\]),/g, '$1 ,')
+        .replace(/([^\\]),/g, "$1 ,")
         .split(/[^\\],/)
-        .map((folder) => folder.replace(/\\,/g, ',')),
+        .map((folder) => folder.replace(/\\,/g, ",")),
       groupDuplicateImages: groupDuplicateImagesInput.checked,
       infobarTemplate: infobarTemplateInput.value,
       blockMixedContent: blockMixedContentInput.checked,
@@ -1329,9 +1337,9 @@ async function update() {
       applySystemTheme: applySystemThemeInput.checked,
       warnUnsavedPage: warnUnsavedPageInput.checked,
     },
-  })
+  });
   try {
-    await pendingSave
+    await pendingSave;
   } catch (error) {
     // ignored
   }
@@ -1339,17 +1347,17 @@ async function update() {
 
 async function refreshExternalComponents() {
   try {
-    await browser.runtime.sendMessage({ method: 'ui.refreshMenu' })
+    await browser.runtime.sendMessage({ method: "ui.refreshMenu" });
     if (sidePanelDisplay) {
       await browser.runtime.sendMessage({
-        method: 'options.refresh',
+        method: "options.refresh",
         profileName: profileNamesInput.value,
-      })
+      });
     } else {
       await browser.runtime.sendMessage({
-        method: 'options.refreshPanel',
+        method: "options.refreshPanel",
         profileName: profileNamesInput.value,
-      })
+      });
     }
   } catch (error) {
     // ignored
@@ -1358,253 +1366,253 @@ async function refreshExternalComponents() {
 
 async function saveCreatedBookmarks() {
   if (saveCreatedBookmarksInput.checked) {
-    saveCreatedBookmarksInput.checked = false
+    saveCreatedBookmarksInput.checked = false;
     try {
       const permissionGranted = await browser.permissions.request({
-        permissions: ['bookmarks'],
-      })
+        permissions: ["bookmarks"],
+      });
       if (permissionGranted) {
-        saveCreatedBookmarksInput.checked = true
-        await update()
-        await refresh()
+        saveCreatedBookmarksInput.checked = true;
+        await update();
+        await refresh();
         await browser.runtime.sendMessage({
-          method: 'bookmarks.saveCreatedBookmarks',
-        })
+          method: "bookmarks.saveCreatedBookmarks",
+        });
       } else {
-        await disableOption()
+        await disableOption();
       }
     } catch (error) {
-      saveCreatedBookmarksInput.checked = false
-      await disableOption()
+      saveCreatedBookmarksInput.checked = false;
+      await disableOption();
     }
   } else {
-    await disableOption()
+    await disableOption();
   }
 
   async function disableOption() {
-    await update()
-    await refresh()
-    await browser.runtime.sendMessage({ method: 'bookmarks.disable' })
+    await update();
+    await refresh();
+    await browser.runtime.sendMessage({ method: "bookmarks.disable" });
   }
 }
 
 async function passReferrerOnError() {
   if (passReferrerOnErrorInput.checked) {
-    passReferrerOnErrorInput.checked = false
+    passReferrerOnErrorInput.checked = false;
     try {
       const permissionGranted = await browser.permissions.request({
-        permissions: ['webRequest', 'webRequestBlocking'],
-      })
+        permissions: ["webRequest", "webRequestBlocking"],
+      });
       if (permissionGranted) {
-        passReferrerOnErrorInput.checked = true
-        await update()
-        await refresh()
+        passReferrerOnErrorInput.checked = true;
+        await update();
+        await refresh();
         await browser.runtime.sendMessage({
-          method: 'requests.enableReferrerOnError',
-        })
+          method: "requests.enableReferrerOnError",
+        });
       } else {
-        await disableOption()
+        await disableOption();
       }
     } catch (error) {
-      await disableOption()
+      await disableOption();
     }
   } else {
-    await disableOption()
+    await disableOption();
   }
 
   async function disableOption() {
-    await update()
-    await refresh()
+    await update();
+    await refresh();
     await browser.runtime.sendMessage({
-      method: 'requests.disableReferrerOnError',
-    })
+      method: "requests.disableReferrerOnError",
+    });
     await browser.permissions.remove({
-      permissions: ['webRequest', 'webRequestBlocking'],
-    })
+      permissions: ["webRequest", "webRequestBlocking"],
+    });
   }
 }
 
 async function enableExternalSave(input) {
   if (input.checked) {
-    input.checked = false
+    input.checked = false;
     try {
       const permissionGranted = await browser.permissions.request({
-        permissions: ['nativeMessaging'],
-      })
+        permissions: ["nativeMessaging"],
+      });
       if (permissionGranted) {
-        input.checked = true
-        await refreshOption()
+        input.checked = true;
+        await refreshOption();
         if (window.chrome) {
-          window.chrome.runtime.reload()
-          location.reload()
+          window.chrome.runtime.reload();
+          location.reload();
         }
       } else {
-        await refreshOption()
+        await refreshOption();
       }
     } catch (error) {
-      input.checked = true
-      await refreshOption()
+      input.checked = true;
+      await refreshOption();
     }
   } else {
-    await refreshOption()
+    await refreshOption();
   }
 
   async function refreshOption() {
-    await update()
-    await refresh()
+    await update();
+    await refresh();
   }
 }
 
 async function confirm(message, positionY) {
-  document.getElementById('confirmLabel').textContent = message
+  document.getElementById("confirmLabel").textContent = message;
   document
-    .getElementById('formConfirmContainer')
-    .style.setProperty('display', 'flex')
+    .getElementById("formConfirmContainer")
+    .style.setProperty("display", "flex");
   document
-    .querySelector('#formConfirmContainer .popup-content')
-    .style.setProperty('margin-top', positionY + 'px')
-  confirmButton.focus()
-  document.body.style.setProperty('overflow-y', 'hidden')
+    .querySelector("#formConfirmContainer .popup-content")
+    .style.setProperty("margin-top", positionY + "px");
+  confirmButton.focus();
+  document.body.style.setProperty("overflow-y", "hidden");
   return new Promise((resolve) => {
-    confirmButton.onclick = (event) => hideAndResolve(event, true)
-    cancelButton.onclick = (event) => hideAndResolve(event)
+    confirmButton.onclick = (event) => hideAndResolve(event, true);
+    cancelButton.onclick = (event) => hideAndResolve(event);
     window.onkeyup = (event) => {
-      if (event.key == 'Escape') {
-        hideAndResolve(event)
+      if (event.key == "Escape") {
+        hideAndResolve(event);
       }
-    }
+    };
 
     function hideAndResolve(event, value) {
-      event.preventDefault()
+      event.preventDefault();
       document
-        .getElementById('formConfirmContainer')
-        .style.setProperty('display', 'none')
-      document.body.style.setProperty('overflow-y', '')
-      resolve(value)
+        .getElementById("formConfirmContainer")
+        .style.setProperty("display", "none");
+      document.body.style.setProperty("overflow-y", "");
+      resolve(value);
     }
-  })
+  });
 }
 
 async function reset(positionY) {
   document
-    .getElementById('formResetContainer')
-    .style.setProperty('display', 'flex')
+    .getElementById("formResetContainer")
+    .style.setProperty("display", "flex");
   document
-    .querySelector('#formResetContainer .popup-content')
-    .style.setProperty('margin-top', positionY + 'px')
-  resetCancelButton.focus()
-  document.body.style.setProperty('overflow-y', 'hidden')
+    .querySelector("#formResetContainer .popup-content")
+    .style.setProperty("margin-top", positionY + "px");
+  resetCancelButton.focus();
+  document.body.style.setProperty("overflow-y", "hidden");
   return new Promise((resolve) => {
-    resetAllButton.onclick = (event) => hideAndResolve(event, 'all')
-    resetCurrentButton.onclick = (event) => hideAndResolve(event, 'current')
-    resetCancelButton.onclick = (event) => hideAndResolve(event)
+    resetAllButton.onclick = (event) => hideAndResolve(event, "all");
+    resetCurrentButton.onclick = (event) => hideAndResolve(event, "current");
+    resetCancelButton.onclick = (event) => hideAndResolve(event);
     window.onkeyup = (event) => {
-      if (event.key == 'Escape') {
-        hideAndResolve(event)
+      if (event.key == "Escape") {
+        hideAndResolve(event);
       }
-    }
+    };
 
     function hideAndResolve(event, value) {
-      event.preventDefault()
+      event.preventDefault();
       document
-        .getElementById('formResetContainer')
-        .style.setProperty('display', 'none')
-      document.body.style.setProperty('overflow-y', '')
-      resolve(value)
+        .getElementById("formResetContainer")
+        .style.setProperty("display", "none");
+      document.body.style.setProperty("overflow-y", "");
+      resolve(value);
     }
-  })
+  });
 }
 
-async function prompt(message, positionY, defaultValue = '') {
-  document.getElementById('promptLabel').textContent = message
+async function prompt(message, positionY, defaultValue = "") {
+  document.getElementById("promptLabel").textContent = message;
   document
-    .getElementById('formPromptContainer')
-    .style.setProperty('display', 'flex')
+    .getElementById("formPromptContainer")
+    .style.setProperty("display", "flex");
   document
-    .querySelector('#formPromptContainer .popup-content')
-    .style.setProperty('margin-top', positionY + 'px')
-  promptInput.value = defaultValue
-  promptInput.focus()
-  document.body.style.setProperty('overflow-y', 'hidden')
+    .querySelector("#formPromptContainer .popup-content")
+    .style.setProperty("margin-top", positionY + "px");
+  promptInput.value = defaultValue;
+  promptInput.focus();
+  document.body.style.setProperty("overflow-y", "hidden");
   return new Promise((resolve) => {
     promptConfirmButton.onclick = (event) =>
-      hideAndResolve(event, promptInput.value)
-    promptCancelButton.onclick = (event) => hideAndResolve(event)
+      hideAndResolve(event, promptInput.value);
+    promptCancelButton.onclick = (event) => hideAndResolve(event);
     window.onkeyup = (event) => {
-      if (event.key == 'Escape') {
-        hideAndResolve(event)
+      if (event.key == "Escape") {
+        hideAndResolve(event);
       }
-    }
+    };
 
     function hideAndResolve(event, value) {
-      event.preventDefault()
+      event.preventDefault();
       document
-        .getElementById('formPromptContainer')
-        .style.setProperty('display', 'none')
-      document.body.style.setProperty('overflow-y', '')
-      resolve(value)
+        .getElementById("formPromptContainer")
+        .style.setProperty("display", "none");
+      document.body.style.setProperty("overflow-y", "");
+      resolve(value);
     }
-  })
+  });
 }
 
 async function getHelpContents() {
-  const helpPage = await fetch(browser.runtime.getURL(HELP_PAGE_PATH))
-  const content = new TextDecoder().decode(await helpPage.arrayBuffer())
-  const doc = new DOMParser().parseFromString(content, 'text/html')
-  const items = doc.querySelectorAll('[data-options-label]')
+  const helpPage = await fetch(browser.runtime.getURL(HELP_PAGE_PATH));
+  const content = new TextDecoder().decode(await helpPage.arrayBuffer());
+  const doc = new DOMParser().parseFromString(content, "text/html");
+  const items = doc.querySelectorAll("[data-options-label]");
   items.forEach((itemElement) => {
     const optionLabel = document.getElementById(
       itemElement.dataset.optionsLabel
-    )
-    const helpIconWrapper = document.createElement('span')
-    const helpIconContainer = document.createElement('span')
-    const helpIcon = document.createElement('img')
-    helpIcon.src = HELP_ICON_URL
-    helpIconWrapper.className = 'help-icon-wrapper'
-    const labelWords = optionLabel.textContent.split(/\s+/)
+    );
+    const helpIconWrapper = document.createElement("span");
+    const helpIconContainer = document.createElement("span");
+    const helpIcon = document.createElement("img");
+    helpIcon.src = HELP_ICON_URL;
+    helpIconWrapper.className = "help-icon-wrapper";
+    const labelWords = optionLabel.textContent.split(/\s+/);
     if (labelWords.length > 1) {
-      helpIconWrapper.textContent = labelWords.pop()
-      optionLabel.textContent = labelWords.join(' ') + ' '
+      helpIconWrapper.textContent = labelWords.pop();
+      optionLabel.textContent = labelWords.join(" ") + " ";
     }
-    helpIconContainer.className = 'help-icon'
+    helpIconContainer.className = "help-icon";
     helpIconContainer.onclick = () => {
-      helpContent.hidden = !helpContent.hidden
-      return false
-    }
-    helpIcon.tabIndex = 0
+      helpContent.hidden = !helpContent.hidden;
+      return false;
+    };
+    helpIcon.tabIndex = 0;
     helpIconContainer.onkeyup = (event) => {
-      if (event.code == 'Enter') {
-        helpContent.hidden = !helpContent.hidden
-        return false
+      if (event.code == "Enter") {
+        helpContent.hidden = !helpContent.hidden;
+        return false;
       }
-    }
-    helpIconContainer.appendChild(helpIcon)
-    helpIconWrapper.appendChild(helpIconContainer)
-    optionLabel.appendChild(helpIconWrapper)
-    const helpContent = document.createElement('div')
-    helpContent.hidden = true
-    helpContent.className = 'help-content'
+    };
+    helpIconContainer.appendChild(helpIcon);
+    helpIconWrapper.appendChild(helpIconContainer);
+    optionLabel.appendChild(helpIconWrapper);
+    const helpContent = document.createElement("div");
+    helpContent.hidden = true;
+    helpContent.className = "help-content";
     itemElement.childNodes.forEach((node) => {
-      if (node instanceof HTMLElement && node.className != 'option') {
-        helpContent.appendChild(document.importNode(node, true))
+      if (node instanceof HTMLElement && node.className != "option") {
+        helpContent.appendChild(document.importNode(node, true));
       }
-    })
-    helpContent.querySelectorAll('a[href]').forEach((linkElement) => {
-      const hrefValue = linkElement.getAttribute('href')
-      if (hrefValue.startsWith('#')) {
+    });
+    helpContent.querySelectorAll("a[href]").forEach((linkElement) => {
+      const hrefValue = linkElement.getAttribute("href");
+      if (hrefValue.startsWith("#")) {
         linkElement.href = browser.runtime.getURL(
-          HELP_PAGE_PATH + linkElement.getAttribute('href')
-        )
-        linkElement.target = '_blank'
+          HELP_PAGE_PATH + linkElement.getAttribute("href")
+        );
+        linkElement.target = "_blank";
       }
-    })
-    optionLabel.parentElement.insertAdjacentElement('afterEnd', helpContent)
-  })
+    });
+    optionLabel.parentElement.insertAdjacentElement("afterEnd", helpContent);
+  });
 }
 
 function getLocalStorageItem(key) {
   try {
-    return localStorage.getItem(key)
+    return localStorage.getItem(key);
   } catch (error) {
     // ignored
   }
@@ -1612,7 +1620,7 @@ function getLocalStorageItem(key) {
 
 function setLocalStorageItem(key, value) {
   try {
-    return localStorage.setItem(key, value)
+    return localStorage.setItem(key, value);
   } catch (error) {
     // ignored
   }
@@ -1620,7 +1628,7 @@ function setLocalStorageItem(key, value) {
 
 function removeLocalStorageItem(key) {
   try {
-    return localStorage.removeItem(key)
+    return localStorage.removeItem(key);
   } catch (error) {
     // ignored
   }

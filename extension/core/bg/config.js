@@ -46,7 +46,7 @@ const DEFAULT_CONFIG = {
   loadDeferredImagesBlockCookies: false,
   loadDeferredImagesBlockStorage: false,
   loadDeferredImagesKeepZoomLevel: false,
-  filenameTemplate: "{page-title} ({date-locale} {time-locale}).html",
+  filenameTemplate: "{page-title}.html",
   infobarTemplate: "",
   includeInfobar: false,
   confirmInfobarContent: false,
