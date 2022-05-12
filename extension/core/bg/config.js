@@ -98,7 +98,6 @@ const DEFAULT_CONFIG = {
   removeAlternativeImages: true,
   groupDuplicateImages: true,
   saveRawPage: false,
-  saveToClipboard: false,
   saveToGitHub: true,
   githubToken: "",
   githubUser: "",

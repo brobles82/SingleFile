@@ -51,7 +51,6 @@ async function downloadPage(pageData, options) {
         confirmFilename: options.confirmFilename,
         filenameConflictAction: options.filenameConflictAction,
         filename: pageData.filename,
-        saveToClipboard: options.saveToClipboard,
         saveToGitHub: options.saveToGitHub,
         githubToken: options.githubToken,
         githubUser: options.githubUser,
@@ -84,16 +83,7 @@ async function downloadPage(pageData, options) {
       await browser.runtime.sendMessage(message);
     }
   } else {
-    if (options.saveToClipboard) {
-      saveToClipboard(pageData);
-    } else {
-      await downloadPageForeground(pageData);
-    }
-    if (options.openSavedPage) {
-      open(
-        URL.createObjectURL(new Blob([pageData.content], { type: "text/html" }))
-      );
-    }
+    await downloadPageForeground(pageData);
     browser.runtime.sendMessage({ method: "ui.processEnd" });
   }
   await browser.runtime.sendMessage({
@@ -114,17 +104,4 @@ async function downloadPageForeground(pageData) {
     URL.revokeObjectURL(link.href);
   }
   return new Promise((resolve) => setTimeout(resolve, 1));
-}
-
-function saveToClipboard(page) {
-  const command = "copy";
-  document.addEventListener(command, listener);
-  document.execCommand(command);
-  document.removeEventListener(command, listener);
-
-  function listener(event) {
-    event.clipboardData.setData("text/html", page.content);
-    event.clipboardData.setData("text/plain", page.content);
-    event.preventDefault();
-  }
 }

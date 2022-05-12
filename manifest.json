@@ -90,7 +90,6 @@
     "identity",
     "menus",
     "nativeMessaging",
-    "clipboardWrite",
     "contextMenus",
     "downloads",
     "storage",

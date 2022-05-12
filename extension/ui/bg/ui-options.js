@@ -48,7 +48,6 @@ const removeImportsLabel = document.getElementById("removeImportsLabel");
 const removeScriptsLabel = document.getElementById("removeScriptsLabel");
 const saveRawPageLabel = document.getElementById("saveRawPageLabel");
 const insertMetaCSPLabel = document.getElementById("insertMetaCSPLabel");
-const saveToClipboardLabel = document.getElementById("saveToClipboardLabel");
 const saveToFilesystemLabel = document.getElementById("saveToFilesystemLabel");
 const saveToGitHubLabel = document.getElementById("saveToGitHubLabel");
 const githubTokenLabel = document.getElementById("githubTokenLabel");
@@ -193,7 +192,6 @@ const removeImportsInput = document.getElementById("removeImportsInput");
 const removeScriptsInput = document.getElementById("removeScriptsInput");
 const saveRawPageInput = document.getElementById("saveRawPageInput");
 const insertMetaCSPInput = document.getElementById("insertMetaCSPInput");
-const saveToClipboardInput = document.getElementById("saveToClipboardInput");
 const saveToGitHubInput = document.getElementById("saveToGitHubInput");
 const githubTokenInput = document.getElementById("githubTokenInput");
 const saveWithCompanionInput = document.getElementById(
@@ -703,9 +701,7 @@ removeImportsLabel.textContent = browser.i18n.getMessage("optionRemoveImports");
 removeScriptsLabel.textContent = browser.i18n.getMessage("optionRemoveScripts");
 saveRawPageLabel.textContent = browser.i18n.getMessage("optionSaveRawPage");
 insertMetaCSPLabel.textContent = browser.i18n.getMessage("optionInsertMetaCSP");
-saveToClipboardLabel.textContent = browser.i18n.getMessage(
-  "optionSaveToClipboard"
-);
+
 saveToFilesystemLabel.textContent = browser.i18n.getMessage(
   "optionSaveToFilesystem"
 );
@@ -1072,15 +1068,12 @@ async function refresh(profileName) {
   removeScriptsInput.checked = profileOptions.removeScripts;
   saveRawPageInput.checked = profileOptions.saveRawPage;
   insertMetaCSPInput.checked = profileOptions.insertMetaCSP;
-  saveToClipboardInput.checked = profileOptions.saveToClipboard;
   saveToGitHubInput.checked = profileOptions.saveToGitHub;
   githubTokenInput.value = profileOptions.githubToken;
   githubTokenInput.disabled = !profileOptions.saveToGitHub;
   saveWithCompanionInput.checked = profileOptions.saveWithCompanion;
   saveToFilesystemInput.checked =
-    !profileOptions.saveToGitHub &&
-    !profileOptions.saveWithCompanion &&
-    !saveToClipboardInput.checked;
+    !profileOptions.saveToGitHub && !profileOptions.saveWithCompanion;
   compressHTMLInput.checked = profileOptions.compressHTML;
   compressCSSInput.checked = profileOptions.compressCSS;
   moveStylesInHeadInput.checked = profileOptions.moveStylesInHead;
@@ -1167,7 +1160,6 @@ async function update() {
       removeScripts: removeScriptsInput.checked,
       saveRawPage: saveRawPageInput.checked,
       insertMetaCSP: insertMetaCSPInput.checked,
-      saveToClipboard: saveToClipboardInput.checked,
       saveToGitHub: saveToGitHubInput.checked,
       githubToken: githubTokenInput.value,
       saveWithCompanion: saveWithCompanionInput.checked,

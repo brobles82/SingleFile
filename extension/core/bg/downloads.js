@@ -102,13 +102,7 @@ async function downloadTabPage(message, tab) {
         content: contents.join(""),
       });
     } else {
-      if (message.saveToClipboard) {
-        message.content = contents.join("");
-        saveToClipboard(message);
-        ui.onEnd(tab.id);
-      } else {
-        await downloadContent(contents, tab, tab.incognito, message);
-      }
+      await downloadContent(contents, tab, tab.incognito, message);
     }
   }
   return {};
@@ -229,18 +223,5 @@ async function downloadPage(pageData, options) {
           "file:///" + downloadData.filename.replace(/#/g, "%23");
       }
     }
-  }
-}
-
-function saveToClipboard(pageData) {
-  const command = "copy";
-  document.addEventListener(command, listener);
-  document.execCommand(command);
-  document.removeEventListener(command, listener);
-
-  function listener(event) {
-    event.clipboardData.setData(MIMETYPE_HTML, pageData.content);
-    event.clipboardData.setData("text/plain", pageData.content);
-    event.preventDefault();
   }
 }

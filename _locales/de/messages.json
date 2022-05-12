@@ -488,10 +488,6 @@
     "message": "set content security policy",
     "description": "Options page label: 'set content security policy'"
   },
-  "optionSaveToClipboard": {
-    "message": "In die Zwischenablage speichern",
-    "description": "Options page label: 'copy to clipboard'"
-  },
   "optionSaveToFilesystem": {
     "message": "save to filesystem",
     "description": "Options page label: 'save to filesystem'"
