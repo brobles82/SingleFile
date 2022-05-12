@@ -924,15 +924,7 @@ table {
 			document.body.contentEditable = true;
 			onUpdate(false);
 		}
-		if (message.method == "formatPage") {
-			formatPage(true);
-		}
-		if (message.method == "formatPageNoTheme") {
-			formatPage(false);
-		}
-		if (message.method == "cancelFormatPage") {
-			cancelFormatPage();
-		}
+
 		if (message.method == "disableEditPage") {
 			document.body.contentEditable = false;
 		}
@@ -1043,7 +1035,6 @@ table {
 				icon: iconElement && iconElement.href,
 				filename,
 				reset,
-				formatPageEnabled: isProbablyReaderable(document)
 			}), "*");
 		}
 	}
@@ -1680,78 +1671,6 @@ table {
 			element = element.parentElement;
 		}
 		return path;
-	}
-
-	function formatPage(applySystemTheme) {
-		previousContent = getContent(false, []);
-		const shadowRoots = {};
-		const classesToPreserve = ["single-file-highlight", "single-file-highlight-yellow", "single-file-highlight-green", "single-file-highlight-pink", "single-file-highlight-blue"];
-		document.querySelectorAll(NOTE_TAGNAME).forEach(containerElement => {
-			shadowRoots[containerElement.dataset.noteId] = containerElement.shadowRoot;
-			const className = "singlefile-note-id-" + containerElement.dataset.noteId;
-			containerElement.classList.add(className);
-			classesToPreserve.push(className);
-		});
-		const article = new Readability(document, { classesToPreserve }).parse();
-		removedElements = [];
-		removedElementIndex = 0;
-		document.body.innerHTML = "";
-		const domParser = new DOMParser();
-		const doc = domParser.parseFromString(article.content, "text/html");
-		const contentEditable = document.body.contentEditable;
-		document.documentElement.replaceChild(doc.body, document.body);
-		document.querySelectorAll(NOTE_TAGNAME).forEach(containerElement => {
-			const noteId = (Array.from(containerElement.classList).find(className => /singlefile-note-id-\d+/.test(className))).split("singlefile-note-id-")[1];
-			containerElement.classList.remove("singlefile-note-id-" + noteId);
-			containerElement.dataset.noteId = noteId;
-			if (!containerElement.shadowRoot) {
-				containerElement.attachShadow({ mode: "open" });
-				containerElement.shadowRoot.appendChild(shadowRoots[noteId]);
-			}
-		});
-		document.querySelectorAll(NOTE_TAGNAME).forEach(containerElement => containerElement.shadowRoot = shadowRoots[containerElement.dataset.noteId]);
-		document.body.contentEditable = contentEditable;
-		document.head.querySelectorAll("style").forEach(styleElement => styleElement.remove());
-		const styleElement = document.createElement("style");
-		styleElement.textContent = STYLE_FORMATTED_PAGE;
-		document.head.appendChild(styleElement);
-		document.body.classList.add("moz-reader-content");
-		document.body.classList.add("content-width6");
-		document.body.classList.add("reader-show-element");
-		document.body.classList.add("sans-serif");
-		document.body.classList.add("container");
-		document.body.classList.add("line-height4");
-		const prefersColorSchemeDark = matchMedia("(prefers-color-scheme: dark)");
-		if (applySystemTheme && prefersColorSchemeDark && prefersColorSchemeDark.matches) {
-			document.body.classList.add("dark");
-		}
-		document.body.style.setProperty("display", "block");
-		document.body.style.setProperty("padding", "24px");
-		const titleElement = document.createElement("h1");
-		titleElement.classList.add("reader-title");
-		titleElement.textContent = article.title;
-		document.body.insertBefore(titleElement, document.body.firstChild);
-		document.querySelectorAll("a[href]").forEach(element => {
-			const href = element.getAttribute("href").trim();
-			if (href.startsWith(document.baseURI + "#")) {
-				element.setAttribute("href", href.substring(document.baseURI.length));
-			}
-		});
-		document.documentElement.appendChild(getStyleElement(HIGHLIGHTS_WEB_STYLESHEET));
-		maskPageElement = getMaskElement(PAGE_MASK_CLASS, PAGE_MASK_CONTAINER_CLASS);
-		maskNoteElement = getMaskElement(NOTE_MASK_CLASS);
-		reflowNotes();
-		onUpdate(false);
-	}
-
-	async function cancelFormatPage() {
-		if (previousContent) {
-			const contentEditable = document.body.contentEditable;
-			await init(previousContent, { reset: true });
-			document.body.contentEditable = contentEditable;
-			onUpdate(false);
-			previousContent = null;
-		}
 	}
 
 	function getContent(compressHTML, updatedResources) {

@@ -671,10 +671,7 @@
     "message": "Abilita/disabilita solo lettura",
     "description": "Title of the button 'Enable/disable read-only' in the editor"
   },
-  "editorFormatPage": {
-    "message": "Formatta la pagina per una migliore leggibilità",
-    "description": "Title of the button 'Format the page for better readability' in the editor"
-  },
+
   "editorCutInnerPage": {
     "message": "Abilita/disabilita la rimozione di elementi interni",
     "description": "Title of the button 'Enable/disable removing of internal elements' in the editor"

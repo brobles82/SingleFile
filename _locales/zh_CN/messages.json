@@ -672,10 +672,7 @@
     "message": "启用/禁用 编辑模式",
     "description": "Title of the button 'Enable/disable read-only' in the editor"
   },
-  "editorFormatPage": {
-    "message": "格式化页面以提升可读性",
-    "description": "Title of the button 'Format the page for better readability' in the editor"
-  },
+
   "editorCutInnerPage": {
     "message": "启用/禁用 点击时删除内部文档元素",
     "description": "Title of the button 'Enable/disable removing of internal elements' in the editor"

@@ -672,10 +672,7 @@
     "message": "読み取り専用を有効/無効にする",
     "description": "Title of the button 'Enable/disable read-only' in the editor"
   },
-  "editorFormatPage": {
-    "message": "Format the page for better readability",
-    "description": "Title of the button 'Format the page for better readability' in the editor"
-  },
+
   "editorCutInnerPage": {
     "message": "Enable/disable removing of internal elements",
     "description": "Title of the button 'Enable/disable removing of internal elements' in the editor"

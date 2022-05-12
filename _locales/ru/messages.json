@@ -672,10 +672,7 @@
     "message": "Включить/отключить режим \"только для чтения\"",
     "description": "Title of the button 'Enable/disable read-only' in the editor"
   },
-  "editorFormatPage": {
-    "message": "Форматировать страницу для лучшей читаемости",
-    "description": "Title of the button 'Format the page for better readability' in the editor"
-  },
+
   "editorCutInnerPage": {
     "message": "Включить/отключить удаление внутренних элементов",
     "description": "Title of the button 'Enable/disable removing of internal elements' in the editor"

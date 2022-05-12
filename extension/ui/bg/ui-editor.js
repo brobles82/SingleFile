@@ -29,7 +29,6 @@ import { onError } from "./../common/content-error.js";
 const editorElement = document.querySelector(".editor");
 const toolbarElement = document.querySelector(".toolbar");
 const editPageButton = document.querySelector(".edit-page-button");
-const formatPageButton = document.querySelector(".format-page-button");
 const cutInnerPageButton = document.querySelector(".cut-inner-page-button");
 const cutOuterPageButton = document.querySelector(".cut-outer-page-button");
 const undoCutPageButton = document.querySelector(".undo-cut-page-button");
@@ -47,7 +46,6 @@ let tabData,
   tabDataContents = [];
 
 editPageButton.title = browser.i18n.getMessage("editorEditPage");
-formatPageButton.title = browser.i18n.getMessage("editorFormatPage");
 cutInnerPageButton.title = browser.i18n.getMessage("editorCutInnerPage");
 cutOuterPageButton.title = browser.i18n.getMessage("editorCutOuterPage");
 undoCutPageButton.title = browser.i18n.getMessage("editorUndoCutPage");
@@ -78,13 +76,7 @@ editPageButton.onmouseup = () => {
     disableEditPage();
   }
 };
-formatPageButton.onmouseup = () => {
-  if (formatPageButton.classList.contains("format-disabled")) {
-    formatPage();
-  } else {
-    cancelFormatPage();
-  }
-};
+
 cutInnerPageButton.onmouseup = () => {
   if (toolbarElement.classList.contains("edit-mode")) {
     disableEditPage();
@@ -222,8 +214,6 @@ addEventListener("message", (event) => {
     tabData.docSaved = message.saved;
   }
   if (message.method == "onInit") {
-    tabData.options.disableFormatPage = !message.formatPageEnabled;
-    formatPageButton.hidden = !message.formatPageEnabled;
     document.title = "[SingleFile] " + message.title;
     if (message.filename) {
       tabData.filename = message.filename;
@@ -239,11 +229,6 @@ addEventListener("message", (event) => {
       const defaultEditorMode = tabData.options.defaultEditorMode;
       if (defaultEditorMode == "edit") {
         enableEditPage();
-      } else if (
-        defaultEditorMode == "format" &&
-        !tabData.options.disableFormatPage
-      ) {
-        formatPage();
       } else if (defaultEditorMode == "cut") {
         enableCutInnerPage();
       } else if (defaultEditorMode == "cut-external") {
@@ -361,28 +346,6 @@ function enableEditPage() {
   toolbarElement.classList.add("edit-mode");
   editorElement.contentWindow.postMessage(
     JSON.stringify({ method: "enableEditPage" }),
-    "*"
-  );
-}
-
-function formatPage() {
-  formatPageButton.classList.remove("format-disabled");
-  updatedResources = {};
-  editorElement.contentWindow.postMessage(
-    JSON.stringify({
-      method: tabData.options.applySystemTheme
-        ? "formatPage"
-        : "formatPageNoTheme",
-    }),
-    "*"
-  );
-}
-
-function cancelFormatPage() {
-  formatPageButton.classList.add("format-disabled");
-  updatedResources = {};
-  editorElement.contentWindow.postMessage(
-    JSON.stringify({ method: "cancelFormatPage" }),
     "*"
   );
 }
