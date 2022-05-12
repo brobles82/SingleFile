@@ -30,7 +30,6 @@ import * as downloads from "./downloads.js";
 import * as tabsData from "./tabs-data.js";
 import * as ui from "./../../ui/bg/index.js";
 import { getPageData } from "./../../index.js";
-import * as woleet from "./../../lib/woleet/woleet.js";
 import { autoSaveIsEnabled } from "./autosave-util.js";
 
 const pendingMessages = {};
@@ -212,9 +211,6 @@ async function saveContent(message, tab) {
             }
             browser.tabs.create(createTabProperties);
           }
-        }
-        if (pageData.hash) {
-          await woleet.anchor(pageData.hash, options.woleetKey);
         }
       }
     } finally {

@@ -33,7 +33,6 @@ import {
   promptValue,
 } from "./tabs-util.js";
 import * as ui from "./../../ui/bg/index.js";
-import * as woleet from "./../../lib/woleet/woleet.js";
 import { pushGitHub } from "./../../lib/github/github.js";
 import { download } from "./download-util.js";
 
@@ -58,13 +57,6 @@ async function onMessage(message, sender) {
   }
 
   if (message.method.endsWith(".end")) {
-    if (message.hash) {
-      try {
-        await woleet.anchor(message.hash, message.woleetKey);
-      } catch (error) {
-        ui.onError(sender.tab.id, error.message, error.link);
-      }
-    }
     business.onSaveEnd(message.taskId);
     return {};
   }

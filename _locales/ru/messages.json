@@ -495,19 +495,6 @@
     "message": "сохранить как файл",
     "description": "Options page label: 'save to filesystem'"
   },
-  "optionAddProof": {
-    "message": "добавить доказательство существования",
-    "description": "Options page label: 'add proof of existence'"
-  },
-  "optionsAddProofConfirm": {
-    "message": "Подтвердите, что разрешаете SingleFile отправлять в Woleet API SHA256-хеш каждой сохраняемой вами страницы. Дополнительную информацию об этой функции можно найти на странице помощи или нажав на знак вопроса рядом с параметром.",
-    "description": "Popup text displayed wen enabling the option 'add proof of existence'"
-  },
-  "optionWoleetKey": {
-    "message": "токен доступа",
-    "description": "Options page label: 'access token'"
-  },
-
   "optionSaveToGitHub": {
     "message": "загрузить на GitHub",
     "description": "Options page label: 'upload to GitHub'"

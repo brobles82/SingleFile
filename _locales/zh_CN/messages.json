@@ -495,19 +495,6 @@
     "message": "保存到文件系统",
     "description": "Options page label: 'save to filesystem'"
   },
-  "optionAddProof": {
-    "message": "添加证明文件存在的指纹",
-    "description": "Options page label: 'add proof of existence'"
-  },
-  "optionsAddProofConfirm": {
-    "message": "请确认您是否允许 SingleFile 将您要保存的每个页面的 SHA256 哈希值发送给 Woleet API 。您可以在帮助页面或者通过点击该选项旁的问号找到此功能的更多信息。",
-    "description": "Popup text displayed wen enabling the option 'add proof of existence'"
-  },
-  "optionWoleetKey": {
-    "message": "访问令牌",
-    "description": "Options page label: 'access token'"
-  },
-
   "optionSaveToGitHub": {
     "message": "保存到 GitHub",
     "description": "Options page label: 'upload to GitHub'"

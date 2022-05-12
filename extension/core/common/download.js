@@ -100,7 +100,6 @@ async function downloadPage(pageData, options) {
     method: "downloads.end",
     taskId: options.taskId,
     hash: pageData.hash,
-    woleetKey: options.woleetKey,
   });
 }
 

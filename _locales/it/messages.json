@@ -495,18 +495,7 @@
     "message": "salva nel filesystem",
     "description": "Options page label: 'save to filesystem'"
   },
-  "optionAddProof": {
-    "message": "aggiungi una prova di esistenza",
-    "description": "Options page label: 'add proof of existence'"
-  },
-  "optionsAddProofConfirm": {
-    "message": "Conferma che permetti a SingleFile di inare alle API Woleet un hash SHA256 di ogni pagina che stai per salvare. Puoi trovare maggiori informazioni su questa caratteristica nella pagina di aiuto o facendo clic sul punto esclamativo accanto all'opzione.",
-    "description": "Popup text displayed wen enabling the option 'add proof of existence'"
-  },
-  "optionWoleetKey": {
-    "message": "token accesso",
-    "description": "Options page label: 'access token'"
-  },
+
   "optionSaveToGitHub": {
     "message": "carica su GitHub",
     "description": "Options page label: 'upload to GitHub'"

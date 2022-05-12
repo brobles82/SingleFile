@@ -99,7 +99,6 @@ const DEFAULT_CONFIG = {
   groupDuplicateImages: true,
   saveRawPage: false,
   saveToClipboard: false,
-  addProof: false,
   saveToGitHub: true,
   githubToken: "",
   githubUser: "",
@@ -131,7 +130,6 @@ const DEFAULT_CONFIG = {
     document: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
   },
   moveStylesInHead: false,
-  woleetKey: "",
 };
 
 let configStorage;

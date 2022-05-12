@@ -50,8 +50,6 @@ const saveRawPageLabel = document.getElementById("saveRawPageLabel");
 const insertMetaCSPLabel = document.getElementById("insertMetaCSPLabel");
 const saveToClipboardLabel = document.getElementById("saveToClipboardLabel");
 const saveToFilesystemLabel = document.getElementById("saveToFilesystemLabel");
-const addProofLabel = document.getElementById("addProofLabel");
-const woleetKeyLabel = document.getElementById("woleetKeyLabel");
 const saveToGitHubLabel = document.getElementById("saveToGitHubLabel");
 const githubTokenLabel = document.getElementById("githubTokenLabel");
 const saveWithCompanionLabel = document.getElementById(
@@ -196,8 +194,6 @@ const removeScriptsInput = document.getElementById("removeScriptsInput");
 const saveRawPageInput = document.getElementById("saveRawPageInput");
 const insertMetaCSPInput = document.getElementById("insertMetaCSPInput");
 const saveToClipboardInput = document.getElementById("saveToClipboardInput");
-const addProofInput = document.getElementById("addProofInput");
-const woleetKeyInput = document.getElementById("woleetKeyInput");
 const saveToGitHubInput = document.getElementById("saveToGitHubInput");
 const githubTokenInput = document.getElementById("githubTokenInput");
 const saveWithCompanionInput = document.getElementById(
@@ -631,21 +627,6 @@ saveWithCompanionInput.addEventListener(
   false
 );
 
-addProofInput.addEventListener("click", async (event) => {
-  if (addProofInput.checked) {
-    addProofInput.checked = false;
-    if (
-      await confirm(
-        browser.i18n.getMessage("optionsAddProofConfirm"),
-        event.clientY - 100
-      )
-    ) {
-      addProofInput.checked = true;
-      woleetKeyInput.disabled = false;
-    }
-    await update();
-  }
-});
 browser.runtime
   .sendMessage({ method: "config.isSync" })
   .then((data) => (synchronizeInput.checked = data.sync));
@@ -728,8 +709,6 @@ saveToClipboardLabel.textContent = browser.i18n.getMessage(
 saveToFilesystemLabel.textContent = browser.i18n.getMessage(
   "optionSaveToFilesystem"
 );
-addProofLabel.textContent = browser.i18n.getMessage("optionAddProof");
-woleetKeyLabel.textContent = browser.i18n.getMessage("optionWoleetKey");
 saveToGitHubLabel.textContent = browser.i18n.getMessage("optionSaveToGitHub");
 githubTokenLabel.textContent = browser.i18n.getMessage("optionGitHubToken");
 saveWithCompanionLabel.textContent = browser.i18n.getMessage(
@@ -1094,9 +1073,6 @@ async function refresh(profileName) {
   saveRawPageInput.checked = profileOptions.saveRawPage;
   insertMetaCSPInput.checked = profileOptions.insertMetaCSP;
   saveToClipboardInput.checked = profileOptions.saveToClipboard;
-  addProofInput.checked = profileOptions.addProof;
-  woleetKeyInput.value = profileOptions.woleetKey;
-  woleetKeyInput.disabled = !profileOptions.addProof;
   saveToGitHubInput.checked = profileOptions.saveToGitHub;
   githubTokenInput.value = profileOptions.githubToken;
   githubTokenInput.disabled = !profileOptions.saveToGitHub;
@@ -1192,8 +1168,6 @@ async function update() {
       saveRawPage: saveRawPageInput.checked,
       insertMetaCSP: insertMetaCSPInput.checked,
       saveToClipboard: saveToClipboardInput.checked,
-      addProof: addProofInput.checked,
-      woleetKey: woleetKeyInput.value,
       saveToGitHub: saveToGitHubInput.checked,
       githubToken: githubTokenInput.value,
       saveWithCompanion: saveWithCompanionInput.checked,
