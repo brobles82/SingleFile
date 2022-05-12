@@ -124,21 +124,11 @@ const removeAlternativeImagesLabel = document.getElementById(
 const removeAlternativeMediasLabel = document.getElementById(
   "removeAlternativeMediasLabel"
 );
-const saveCreatedBookmarksLabel = document.getElementById(
-  "saveCreatedBookmarksLabel"
-);
+
 const passReferrerOnErrorLabel = document.getElementById(
   "passReferrerOnErrorLabel"
 );
-const replaceBookmarkURLLabel = document.getElementById(
-  "replaceBookmarkURLLabel"
-);
-const allowedBookmarkFoldersLabel = document.getElementById(
-  "allowedBookmarkFoldersLabel"
-);
-const ignoredBookmarkFoldersLabel = document.getElementById(
-  "ignoredBookmarkFoldersLabel"
-);
+
 const userInterfaceLabel = document.getElementById("userInterfaceLabel");
 const filenameLabel = document.getElementById("filenameLabel");
 const htmlContentLabel = document.getElementById("htmlContentLabel");
@@ -147,7 +137,6 @@ const stylesheetsLabel = document.getElementById("stylesheetsLabel");
 const fontsLabel = document.getElementById("fontsLabel");
 const otherResourcesLabel = document.getElementById("otherResourcesLabel");
 const destinationLabel = document.getElementById("destinationLabel");
-const bookmarksLabel = document.getElementById("bookmarksLabel");
 const autoSaveLabel = document.getElementById("autoSaveLabel");
 const autoSettingsLabel = document.getElementById("autoSettingsLabel");
 const autoSettingsUrlLabel = document.getElementById("autoSettingsUrlLabel");
@@ -272,20 +261,8 @@ const removeAlternativeImagesInput = document.getElementById(
 const removeAlternativeMediasInput = document.getElementById(
   "removeAlternativeMediasInput"
 );
-const saveCreatedBookmarksInput = document.getElementById(
-  "saveCreatedBookmarksInput"
-);
 const passReferrerOnErrorInput = document.getElementById(
   "passReferrerOnErrorInput"
-);
-const replaceBookmarkURLInput = document.getElementById(
-  "replaceBookmarkURLInput"
-);
-const allowedBookmarkFoldersInput = document.getElementById(
-  "allowedBookmarkFoldersInput"
-);
-const ignoredBookmarkFoldersInput = document.getElementById(
-  "ignoredBookmarkFoldersInput"
 );
 const groupDuplicateImagesInput = document.getElementById(
   "groupDuplicateImagesInput"
@@ -641,11 +618,7 @@ removeScriptsInput.addEventListener(
   },
   false
 );
-saveCreatedBookmarksInput.addEventListener(
-  "click",
-  saveCreatedBookmarks,
-  false
-);
+
 passReferrerOnErrorInput.addEventListener("click", passReferrerOnError, false);
 autoSaveExternalSaveInput.addEventListener(
   "click",
@@ -699,7 +672,6 @@ document.body.onchange = async (event) => {
     target != ruleEditProfileInput &&
     target != ruleEditAutoSaveProfileInput &&
     target != showAutoSaveProfileInput &&
-    target != saveCreatedBookmarksInput &&
     target != passReferrerOnErrorInput
   ) {
     if (target != profileNamesInput && target != showAllProfilesInput) {
@@ -850,20 +822,8 @@ removeAlternativeImagesLabel.textContent = browser.i18n.getMessage(
 removeAlternativeMediasLabel.textContent = browser.i18n.getMessage(
   "optionRemoveAlternativeMedias"
 );
-saveCreatedBookmarksLabel.textContent = browser.i18n.getMessage(
-  "optionSaveCreatedBookmarks"
-);
 passReferrerOnErrorLabel.textContent = browser.i18n.getMessage(
   "optionPassReferrerOnError"
-);
-replaceBookmarkURLLabel.textContent = browser.i18n.getMessage(
-  "optionReplaceBookmarkURL"
-);
-allowedBookmarkFoldersLabel.textContent = browser.i18n.getMessage(
-  "optionAllowedBookmarkFolders"
-);
-ignoredBookmarkFoldersLabel.textContent = browser.i18n.getMessage(
-  "optionIgnoredBookmarkFolders"
 );
 groupDuplicateImagesLabel.textContent = browser.i18n.getMessage(
   "optionGroupDuplicateImages"
@@ -884,7 +844,6 @@ otherResourcesLabel.textContent = browser.i18n.getMessage(
 destinationLabel.textContent = browser.i18n.getMessage(
   "optionsDestionationSubTitle"
 );
-bookmarksLabel.textContent = browser.i18n.getMessage("optionsBookmarkSubTitle");
 autoSaveLabel.textContent = browser.i18n.getMessage("optionsAutoSaveSubTitle");
 miscLabel.textContent = browser.i18n.getMessage("optionsMiscSubTitle");
 helpLabel.textContent = browser.i18n.getMessage("optionsHelpLink");
@@ -1191,18 +1150,7 @@ async function refresh(profileName) {
   removeAlternativeImagesInput.checked = profileOptions.removeAlternativeImages;
   groupDuplicateImagesInput.checked = profileOptions.groupDuplicateImages;
   removeAlternativeMediasInput.checked = profileOptions.removeAlternativeMedias;
-  saveCreatedBookmarksInput.checked = profileOptions.saveCreatedBookmarks;
   passReferrerOnErrorInput.checked = profileOptions.passReferrerOnError;
-  replaceBookmarkURLInput.checked = profileOptions.replaceBookmarkURL;
-  replaceBookmarkURLInput.disabled = !profileOptions.saveCreatedBookmarks;
-  allowedBookmarkFoldersInput.value = profileOptions.allowedBookmarkFolders
-    .map((folder) => folder.replace(/,/g, "\\,"))
-    .join(","); // eslint-disable-line no-useless-escape
-  allowedBookmarkFoldersInput.disabled = !profileOptions.saveCreatedBookmarks;
-  ignoredBookmarkFoldersInput.value = profileOptions.ignoredBookmarkFolders
-    .map((folder) => folder.replace(/,/g, "\\,"))
-    .join(","); // eslint-disable-line no-useless-escape
-  ignoredBookmarkFoldersInput.disabled = !profileOptions.saveCreatedBookmarks;
   infobarTemplateInput.value = profileOptions.infobarTemplate;
   blockMixedContentInput.checked = profileOptions.blockMixedContent;
   saveOriginalURLsInput.checked = profileOptions.saveOriginalURLs;
@@ -1284,17 +1232,7 @@ async function update() {
       removeAlternativeFonts: removeAlternativeFontsInput.checked,
       removeAlternativeImages: removeAlternativeImagesInput.checked,
       removeAlternativeMedias: removeAlternativeMediasInput.checked,
-      saveCreatedBookmarks: saveCreatedBookmarksInput.checked,
       passReferrerOnError: passReferrerOnErrorInput.checked,
-      replaceBookmarkURL: replaceBookmarkURLInput.checked,
-      allowedBookmarkFolders: allowedBookmarkFoldersInput.value
-        .replace(/([^\\]),/g, "$1 ,")
-        .split(/[^\\],/)
-        .map((folder) => folder.replace(/\\,/g, ",")),
-      ignoredBookmarkFolders: ignoredBookmarkFoldersInput.value
-        .replace(/([^\\]),/g, "$1 ,")
-        .split(/[^\\],/)
-        .map((folder) => folder.replace(/\\,/g, ",")),
       groupDuplicateImages: groupDuplicateImagesInput.checked,
       infobarTemplate: infobarTemplateInput.value,
       blockMixedContent: blockMixedContentInput.checked,
@@ -1333,38 +1271,6 @@ async function refreshExternalComponents() {
     }
   } catch (error) {
     // ignored
-  }
-}
-
-async function saveCreatedBookmarks() {
-  if (saveCreatedBookmarksInput.checked) {
-    saveCreatedBookmarksInput.checked = false;
-    try {
-      const permissionGranted = await browser.permissions.request({
-        permissions: ["bookmarks"],
-      });
-      if (permissionGranted) {
-        saveCreatedBookmarksInput.checked = true;
-        await update();
-        await refresh();
-        await browser.runtime.sendMessage({
-          method: "bookmarks.saveCreatedBookmarks",
-        });
-      } else {
-        await disableOption();
-      }
-    } catch (error) {
-      saveCreatedBookmarksInput.checked = false;
-      await disableOption();
-    }
-  } else {
-    await disableOption();
-  }
-
-  async function disableOption() {
-    await update();
-    await refresh();
-    await browser.runtime.sendMessage({ method: "bookmarks.disable" });
   }
 }
 

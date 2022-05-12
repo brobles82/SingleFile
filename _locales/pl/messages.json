@@ -311,10 +311,6 @@
     "message": "Cel",
     "description": "Options sub-title: 'Destination'"
   },
-  "optionsBookmarkSubTitle": {
-    "message": "Zakładki",
-    "description": "Options sub-title: 'Bookmarks'"
-  },
   "optionsAutoSaveSubTitle": {
     "message": "Automatyczny zapis",
     "description": "Options sub-title: 'Auto-save'"
@@ -535,22 +531,6 @@
   "optionSaveWithCompanion": {
     "message": "zapisuj z SingleFile Companion",
     "description": "Options page label: 'save with SingleFile Companion'"
-  },
-  "optionSaveCreatedBookmarks": {
-    "message": "zapisuj stronę nowo utworzonej zakładki",
-    "description": "Options page label: 'save the page of a newly created bookmark'"
-  },
-  "optionReplaceBookmarkURL": {
-    "message": "łącz nową zakładkę z zapisaną stroną",
-    "description": "Options page label: 'link the new bookmark to the saved page'"
-  },
-  "optionAllowedBookmarkFolders": {
-    "message": "dozwolone foldery",
-    "description": "Options page label: 'allowed folders'"
-  },
-  "optionIgnoredBookmarkFolders": {
-    "message": "ignorowane foldery",
-    "description": "Options page label: 'ignored folders'"
   },
   "optionsHelpLink": {
     "message": "pomoc (w języku angielskim)",

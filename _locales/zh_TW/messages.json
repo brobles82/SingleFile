@@ -311,10 +311,6 @@
     "message": "目的地",
     "description": "Options sub-title: 'Destination'"
   },
-  "optionsBookmarkSubTitle": {
-    "message": "書籤",
-    "description": "Options sub-title: 'Bookmarks'"
-  },
   "optionsAutoSaveSubTitle": {
     "message": "自動保存",
     "description": "Options sub-title: 'Auto-save'"
@@ -535,22 +531,6 @@
   "optionSaveWithCompanion": {
     "message": "使用 SingleFile Companion 保存",
     "description": "Options page label: 'save with SingleFile Companion'"
-  },
-  "optionSaveCreatedBookmarks": {
-    "message": "創建新書籤時保存其對應頁面",
-    "description": "Options page label: 'save the page of a newly created bookmark'"
-  },
-  "optionReplaceBookmarkURL": {
-    "message": "將新書籤的鏈接指向已保存頁面",
-    "description": "Options page label: 'link the new bookmark to the saved page'"
-  },
-  "optionAllowedBookmarkFolders": {
-    "message": "允許文件夾",
-    "description": "Options page label: 'allowed folders'"
-  },
-  "optionIgnoredBookmarkFolders": {
-    "message": "忽略文件夾",
-    "description": "Options page label: 'ignored folders'"
   },
   "optionsHelpLink": {
     "message": "幫助",

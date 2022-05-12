@@ -430,34 +430,6 @@
 						<p class="notice">It is recommended to <u>uncheck</u> this option</p>
 					</li>
 				</ul>
-				<p>Bookmarks</p>
-				<ul>
-					<li data-options-label="saveCreatedBookmarksLabel"> <span class="option">Option: save the page of a
-							newly created bookmark</span>
-						<p>Check this option to save pages that you add into your bookmarks. Note that if the page is to
-							be saved is not already displayed in a tab, SingleFile will open temporarily a new tab to
-							save the page. </p>
-						<p class="notice">It is recommended to <u>uncheck</u> this option</p>
-					</li>
-					<li data-options-label="replaceBookmarkURLLabel"> <span class="option">Option: link the new bookmark
-							to the saved page</span>
-						<p>Check this option to replace the URL of the page added into your bookmark with the file URI
-							of the saved page on your disk. </p>
-						<p class="notice">It is recommended to <u>uncheck</u> this option</p>
-					</li>
-					<li data-options-label="ignoredBookmarkFoldersLabel"> <span class="option">Option: ignored
-							folders</span>
-						<p>Enter a list of bookmark folder names to ignore. The folder names must be separated with a
-							comma. SingleFile will ignore bookmarks added in folders that contains these names.
-						</p>
-					</li>
-					<li data-options-label="allowedBookmarkFoldersLabel"> <span class="option">Option: ignored
-							folders</span>
-						<p>Enter a list of bookmark folder names to allow. The folder names must be separated with a
-							comma. SingleFile will only save pages added in folders that contains these names.
-						</p>
-					</li>
-				</ul>
 				<p>Auto-save</p>
 				<ul>
 					<li data-options-label="autoSaveLoadOrUnloadLabel"> <span class="option">Option: auto-save after
@@ -734,12 +706,6 @@
 						"http://example.com")</li>
 					<li><code>{url-referrer-flat}</code>: the URI of the page that "linked" to the page with slashed
 						replaced (e.g. "http_example.com")</li>
-					<li><code>{bookmark-pathname}</code>: the path name of the newly created bookmark (e.g. "My
-						Bookmarks/Last Month") when the option "Bookmarks &gt; save the page of a
-						newly created bookmark" is enabled</li>
-					<li><code>{bookmark-pathname-flat}</code>: the path name of the newly created bookmark with replaced
-						slashes (e.g. "My Bookmarks_Last Month") when the option "Bookmarks &gt; save the page of a
-						newly created bookmark" is enabled</li>
 					<li><code>{tab-id}</code>: the unique identifier of the tab (e.g. "326")</li>
 					<li><code>{tab-index}</code>: the index of the tab in the window (e.g. "1")</li>
 					<li><code>{digest-sha-256}</code>: the SHA-256 hash value of the entire page content (e.g.

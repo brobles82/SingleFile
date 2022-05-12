@@ -311,10 +311,6 @@
     "message": "Destino",
     "description": "Options sub-title: 'Destination'"
   },
-  "optionsBookmarkSubTitle": {
-    "message": "Marcadores",
-    "description": "Options sub-title: 'Bookmarks'"
-  },
   "optionsAutoSaveSubTitle": {
     "message": "Auto-guardado",
     "description": "Options sub-title: 'Auto-save'"
@@ -522,22 +518,6 @@
   "optionSaveWithCompanion": {
     "message": "guardar la página con SingleFile Companion",
     "description": "Options page label: 'save with SingleFile Companion'"
-  },
-  "optionSaveCreatedBookmarks": {
-    "message": "guardar la página de un marcador recién creado",
-    "description": "Options page label: 'save the page of a newly created bookmark'"
-  },
-  "optionReplaceBookmarkURL": {
-    "message": "enlazar el nuevo marcador a la página guardada",
-    "description": "Options page label: 'link the new bookmark to the saved page'"
-  },
-  "optionAllowedBookmarkFolders": {
-    "message": "carpetas permitidas",
-    "description": "Options page label: 'allowed folders'"
-  },
-  "optionIgnoredBookmarkFolders": {
-    "message": "carpetas ignoradas",
-    "description": "Options page label: 'ignored folders'"
   },
   "optionsHelpLink": {
     "message": "ayuda",

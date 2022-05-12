@@ -311,10 +311,6 @@
     "message": "目的地",
     "description": "Options sub-title: 'Destination'"
   },
-  "optionsBookmarkSubTitle": {
-    "message": "书签",
-    "description": "Options sub-title: 'Bookmarks'"
-  },
   "optionsAutoSaveSubTitle": {
     "message": "自动保存",
     "description": "Options sub-title: 'Auto-save'"
@@ -535,22 +531,6 @@
   "optionSaveWithCompanion": {
     "message": "使用 SingleFile Companion 保存",
     "description": "Options page label: 'save with SingleFile Companion'"
-  },
-  "optionSaveCreatedBookmarks": {
-    "message": "创建新书签时保存其对应页面",
-    "description": "Options page label: 'save the page of a newly created bookmark'"
-  },
-  "optionReplaceBookmarkURL": {
-    "message": "将新书签的链接指向已保存页面",
-    "description": "Options page label: 'link the new bookmark to the saved page'"
-  },
-  "optionAllowedBookmarkFolders": {
-    "message": "允许文件夹",
-    "description": "Options page label: 'allowed folders'"
-  },
-  "optionIgnoredBookmarkFolders": {
-    "message": "忽略文件夹",
-    "description": "Options page label: 'ignored folders'"
   },
   "optionsHelpLink": {
     "message": "帮助",

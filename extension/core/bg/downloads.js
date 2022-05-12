@@ -24,7 +24,6 @@
 /* global browser, Blob, URL, document */
 
 import * as config from "./config.js";
-import * as bookmarks from "./bookmarks.js";
 import * as companion from "./companion.js";
 import * as business from "./business.js";
 import * as editor from "./editor.js";
@@ -229,11 +228,7 @@ async function downloadPage(pageData, options) {
       downloadInfo,
       options.filenameReplacementCharacter
     );
-    if (
-      downloadData.filename &&
-      pageData.bookmarkId &&
-      pageData.replaceBookmarkURL
-    ) {
+    if (downloadData.filename) {
       if (!downloadData.filename.startsWith("file:")) {
         if (downloadData.filename.startsWith("/")) {
           downloadData.filename = downloadData.filename.substring(1);
@@ -241,9 +236,6 @@ async function downloadPage(pageData, options) {
         downloadData.filename =
           "file:///" + downloadData.filename.replace(/#/g, "%23");
       }
-      await bookmarks.update(pageData.bookmarkId, {
-        url: downloadData.filename,
-      });
     }
   }
 }

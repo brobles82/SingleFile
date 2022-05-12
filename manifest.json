@@ -100,7 +100,6 @@
   "optional_permissions": [
     "identity",
     "nativeMessaging",
-    "bookmarks",
     "webRequest",
     "webRequestBlocking"
   ],

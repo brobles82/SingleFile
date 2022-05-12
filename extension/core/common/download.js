@@ -65,8 +65,6 @@ async function downloadPage(pageData, options) {
         openSavedPage: options.openSavedPage,
         compressHTML: options.compressHTML,
         backgroundSave: options.backgroundSave,
-        bookmarkId: options.bookmarkId,
-        replaceBookmarkURL: options.replaceBookmarkURL,
         applySystemTheme: options.applySystemTheme,
         defaultEditorMode: options.defaultEditorMode,
         includeInfobar: options.includeInfobar,

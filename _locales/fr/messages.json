@@ -311,10 +311,6 @@
     "message": "Destination",
     "description": "Options sub-title: 'Destination'"
   },
-  "optionsBookmarkSubTitle": {
-    "message": "Signets",
-    "description": "Options sub-title: 'Bookmarks'"
-  },
   "optionsAutoSaveSubTitle": {
     "message": "Auto-sauvegarde",
     "description": "Options sub-title: 'Auto-save'"
@@ -535,22 +531,6 @@
   "optionSaveWithCompanion": {
     "message": "sauvegarder avec SingleFile Companion",
     "description": "Options page label: 'save with SingleFile Companion'"
-  },
-  "optionSaveCreatedBookmarks": {
-    "message": "sauvegarder la page d'un signet nouvellement créé",
-    "description": "Options page label: 'save the page of a newly created bookmark'"
-  },
-  "optionReplaceBookmarkURL": {
-    "message": "lier le nouveau signet à la page sauvegardée",
-    "description": "Options page label: 'link the new bookmark to the saved page'"
-  },
-  "optionAllowedBookmarkFolders": {
-    "message": "dossiers autorisés",
-    "description": "Options page label: 'allowed folders'"
-  },
-  "optionIgnoredBookmarkFolders": {
-    "message": "dossiers ignorés",
-    "description": "Options page label: 'ignored folders'"
   },
   "optionsHelpLink": {
     "message": "aide (anglais)",

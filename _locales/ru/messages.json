@@ -311,10 +311,6 @@
     "message": "Место назначения",
     "description": "Options sub-title: 'Destination'"
   },
-  "optionsBookmarkSubTitle": {
-    "message": "Закладки",
-    "description": "Options sub-title: 'Bookmarks'"
-  },
   "optionsAutoSaveSubTitle": {
     "message": "Автосохранение",
     "description": "Options sub-title: 'Auto-save'"
@@ -535,22 +531,6 @@
   "optionSaveWithCompanion": {
     "message": "сохранять с помощью SingleFile Companion",
     "description": "Options page label: 'save with SingleFile Companion'"
-  },
-  "optionSaveCreatedBookmarks": {
-    "message": "сохранить страницу недавно созданной закладки",
-    "description": "Options page label: 'save the page of a newly created bookmark'"
-  },
-  "optionReplaceBookmarkURL": {
-    "message": "связать новую закладку с сохранённой страницей",
-    "description": "Options page label: 'link the new bookmark to the saved page'"
-  },
-  "optionAllowedBookmarkFolders": {
-    "message": "разрешённые папки",
-    "description": "Options page label: 'allowed folders'"
-  },
-  "optionIgnoredBookmarkFolders": {
-    "message": "игнорируемые папки",
-    "description": "Options page label: 'ignored folders'"
   },
   "optionsHelpLink": {
     "message": "помощь",

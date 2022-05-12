@@ -311,10 +311,6 @@
     "message": "Destination",
     "description": "Options sub-title: 'Destination'"
   },
-  "optionsBookmarkSubTitle": {
-    "message": "Bookmarks",
-    "description": "Options sub-title: 'Bookmarks'"
-  },
   "optionsAutoSaveSubTitle": {
     "message": "Auto-save",
     "description": "Options sub-title: 'Auto-save'"
@@ -534,22 +530,6 @@
   "optionSaveWithCompanion": {
     "message": "save with SingleFile Companion",
     "description": "Options page label: 'save with SingleFile Companion'"
-  },
-  "optionSaveCreatedBookmarks": {
-    "message": "save the page of a newly created bookmark",
-    "description": "Options page label: 'save the page of a newly created bookmark'"
-  },
-  "optionReplaceBookmarkURL": {
-    "message": "link the new bookmark to the saved page",
-    "description": "Options page label: 'link the new bookmark to the saved page'"
-  },
-  "optionAllowedBookmarkFolders": {
-    "message": "allowed folders",
-    "description": "Options page label: 'allowed folders'"
-  },
-  "optionIgnoredBookmarkFolders": {
-    "message": "ignored folders",
-    "description": "Options page label: 'ignored folders'"
   },
   "optionsHelpLink": {
     "message": "help",
