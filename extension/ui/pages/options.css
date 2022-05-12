@@ -114,11 +114,6 @@ h3 a {
   justify-content: flex-end;
 }
 
-.options-title {
-  flex: 1;
-  white-space: nowrap;
-}
-
 .help-icon-wrapper {
   white-space: nowrap;
 }
@@ -475,7 +470,6 @@ a {
   padding-right: 0;
 }
 
-.side-panel .options-title,
 .side-panel .option.bottom {
   display: none;
 }

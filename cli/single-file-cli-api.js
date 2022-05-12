@@ -41,7 +41,7 @@ const DEFAULT_OPTIONS = {
   loadDeferredImagesBlockCookies: false,
   loadDeferredImagesBlockStorage: false,
   loadDeferredImagesKeepZoomLevel: false,
-  filenameTemplate: "{page-title}.html",
+  filenameTemplate: "{page-title}",
   infobarTemplate: "",
   includeInfobar: false,
   filenameMaxLength: 192,

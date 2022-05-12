@@ -140,7 +140,6 @@ const allowedBookmarkFoldersLabel = document.getElementById(
 const ignoredBookmarkFoldersLabel = document.getElementById(
   "ignoredBookmarkFoldersLabel"
 );
-const titleLabel = document.getElementById("titleLabel");
 const userInterfaceLabel = document.getElementById("userInterfaceLabel");
 const filenameLabel = document.getElementById("filenameLabel");
 const htmlContentLabel = document.getElementById("htmlContentLabel");
@@ -358,7 +357,6 @@ const promptConfirmButton = document.getElementById("promptConfirmButton");
 let sidePanelDisplay;
 if (location.href.endsWith("#side-panel")) {
   sidePanelDisplay = true;
-  document.querySelector(".options-title").remove();
   document.documentElement.classList.add("side-panel");
 }
 browser.runtime.onMessage.addListener((message) => {
@@ -890,10 +888,7 @@ ignoredBookmarkFoldersLabel.textContent = browser.i18n.getMessage(
 groupDuplicateImagesLabel.textContent = browser.i18n.getMessage(
   "optionGroupDuplicateImages"
 );
-titleLabel.textContent = browser.i18n.getMessage("optionsTitle");
-userInterfaceLabel.textContent = browser.i18n.getMessage(
-  "optionsUserInterfaceSubTitle"
-);
+
 filenameLabel.textContent = browser.i18n.getMessage("optionsFileNameSubTitle");
 htmlContentLabel.textContent = browser.i18n.getMessage(
   "optionsHTMLContentSubTitle"
