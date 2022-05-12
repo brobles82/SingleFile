@@ -100,7 +100,6 @@ const DEFAULT_CONFIG = {
   saveRawPage: false,
   saveToClipboard: false,
   addProof: false,
-  saveToGDrive: false,
   saveToGitHub: true,
   githubToken: "",
   githubUser: "",
@@ -152,9 +151,6 @@ export {
   onMessage,
   updateRule,
   addRule,
-  getAuthInfo,
-  setAuthInfo,
-  removeAuthInfo,
 };
 
 async function upgrade() {
@@ -502,23 +498,6 @@ async function updateRule(url, newURL, profile, autoSaveProfile) {
   urlConfig.profile = profile;
   urlConfig.autoSaveProfile = autoSaveProfile;
   await configStorage.set({ rules: config.rules });
-}
-
-async function getAuthInfo() {
-  return (await configStorage.get()).authInfo;
-}
-
-async function setAuthInfo(authInfo) {
-  await configStorage.set({ authInfo });
-}
-
-async function removeAuthInfo() {
-  let authInfo = getAuthInfo();
-  if (authInfo.revokableAccessToken) {
-    setAuthInfo({ revokableAccessToken: authInfo.revokableAccessToken });
-  } else {
-    await configStorage.remove(["authInfo"]);
-  }
 }
 
 async function resetProfiles() {

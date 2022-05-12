@@ -511,10 +511,6 @@
     "message": "access token",
     "description": "Options page label: 'access token'"
   },
-  "optionSaveToGDrive": {
-    "message": "In Google Drive speichern",
-    "description": "Options page label: 'upload to Google Drive'"
-  },
   "optionSaveToGitHub": {
     "message": "upload to GitHub",
     "description": "Options page label: 'upload to GitHub'"
