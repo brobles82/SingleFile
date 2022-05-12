@@ -195,7 +195,7 @@ async function saveToGitHub(taskId, filename, content, githubToken, url) {
       ).pushPromise;
       return pushInfo;
     } catch (error) {
-      throw new Error(error.message + " (GitHub)");
+      throw new Error(error.message);
     }
   }
 }

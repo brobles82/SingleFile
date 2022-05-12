@@ -28,6 +28,10 @@ export { pushGitHub };
 let pendingPush;
 
 async function pushGitHub(token, url, title, content) {
+  if (!token || token.trim().length === 0) {
+    throw new Error("No token found ! Plz add a token in the options.");
+  }
+
   while (pendingPush) {
     await pendingPush;
   }
@@ -53,36 +57,17 @@ async function pushGitHub(token, url, title, content) {
         token: token,
       };
 
-      // // const response = await fetch(`http://localhost:3000/api/v1/sfile`, {
-
       const endpointUrl = "http://localhost:3000/api/arkwebsite-creation";
 
       const response = await fetch(endpointUrl, {
-        //  const response = await fetch(`https://arkwsites.com/api/v1/sfile`, {
         method: "POST",
         body: JSON.stringify(web),
         headers: {
           "Content-Type": "application/json",
-          //  Authorization: `token ${token}`,
         },
       });
 
-      // let formData = new FormData();
-      // formData.append("name", title);
-      // formData.append("url", url);
-      // formData.append("content", content);
-      // formData.append("token", token);
-
-      // const response = await fetch(
-      //   "http://192.168.1.140:3000/api/arkwebsite-creation",
-      //   {
-      //     body: formData,
-      //     method: "post",
-      //   }
-      // );
-
       const responseData = await response.json();
-      // const responseData2 = await response2.json();
 
       if (response.status < 400) {
         return responseData;
