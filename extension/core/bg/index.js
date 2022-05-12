@@ -26,7 +26,6 @@
 import * as config from "./config.js";
 import * as bootstrap from "./bootstrap.js";
 import * as autosave from "./autosave.js";
-import * as companion from "./companion.js";
 import * as devtools from "./devtools.js";
 import * as downloads from "./downloads.js";
 import * as editor from "./editor.js";
@@ -60,9 +59,6 @@ browser.runtime.onMessage.addListener((message, sender) => {
   }
   if (message.method.startsWith("editor.")) {
     return editor.onMessage(message, sender);
-  }
-  if (message.method.startsWith("companion.")) {
-    return companion.onMessage(message, sender);
   }
   if (message.method.startsWith("requests.")) {
     return requests.onMessage(message, sender);

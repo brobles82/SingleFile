@@ -403,10 +403,7 @@
     "message": "週期（秒）",
     "description": "Options page label: 'period (s)'"
   },
-  "optionAutoSaveExternalSave": {
-    "message": "使用 SingleFile Companion 保存頁面",
-    "description": "Options page label: 'save the page with SingleFile Companion'"
-  },
+
   "optionsEditorSubTitle": {
     "message": "標註編輯器",
     "description": "Options sub-title: 'Annotation editor'"
@@ -506,14 +503,6 @@
   "optionGitHubRepository": {
     "message": "倉庫名稱",
     "description": "Options page label: 'repository name'"
-  },
-  "optionGitHubBranch": {
-    "message": "分支名稱",
-    "description": "Options page label: 'branch name'"
-  },
-  "optionSaveWithCompanion": {
-    "message": "使用 SingleFile Companion 保存",
-    "description": "Options page label: 'save with SingleFile Companion'"
   },
   "optionsHelpLink": {
     "message": "幫助",

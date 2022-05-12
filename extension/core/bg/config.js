@@ -102,8 +102,6 @@ const DEFAULT_CONFIG = {
   githubToken: "",
   githubUser: "",
   githubRepository: "SingleFile-Archives",
-  githubBranch: "main",
-  saveWithCompanion: false,
   forceWebAuthFlow: false,
   extractAuthCode: true,
   resolveFragmentIdentifierURLs: false,

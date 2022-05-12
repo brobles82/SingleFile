@@ -404,10 +404,6 @@
     "message": "Zeitraum (s.)",
     "description": "Options page label: 'period (s)'"
   },
-  "optionAutoSaveExternalSave": {
-    "message": "Speichern der Seite mit SingleFile Companion",
-    "description": "Options page label: 'save the page with SingleFile Companion'"
-  },
   "optionsEditorSubTitle": {
     "message": "Annotation editor",
     "description": "Options sub-title: 'Annotation editor'"
@@ -508,14 +504,6 @@
   "optionGitHubRepository": {
     "message": "repository name",
     "description": "Options page label: 'repository name'"
-  },
-  "optionGitHubBranch": {
-    "message": "branch name",
-    "description": "Options page label: 'branch name'"
-  },
-  "optionSaveWithCompanion": {
-    "message": "Speichern mit SingleFile Companion",
-    "description": "Options page label: 'save with SingleFile Companion'"
   },
   "optionsHelpLink": {
     "message": "Hilfe",

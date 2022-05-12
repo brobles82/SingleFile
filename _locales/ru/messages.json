@@ -403,10 +403,7 @@
     "message": "период (сек.)",
     "description": "Options page label: 'period (s)'"
   },
-  "optionAutoSaveExternalSave": {
-    "message": "сохранять страницу с помощью SingleFile Companion",
-    "description": "Options page label: 'save the page with SingleFile Companion'"
-  },
+
   "optionsEditorSubTitle": {
     "message": "Редактор аннотаций",
     "description": "Options sub-title: 'Annotation editor'"
@@ -507,14 +504,7 @@
     "message": "название репозитория",
     "description": "Options page label: 'repository name'"
   },
-  "optionGitHubBranch": {
-    "message": "название ветки",
-    "description": "Options page label: 'branch name'"
-  },
-  "optionSaveWithCompanion": {
-    "message": "сохранять с помощью SingleFile Companion",
-    "description": "Options page label: 'save with SingleFile Companion'"
-  },
+
   "optionsHelpLink": {
     "message": "помощь",
     "description": "Options help link"

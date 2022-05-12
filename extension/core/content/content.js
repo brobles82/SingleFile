@@ -104,9 +104,7 @@ async function savePage(message) {
         const pageData = await processPage(options);
         if (pageData) {
           if (
-            (!options.backgroundSave ||
-              options.saveToGitHub ||
-              options.saveWithCompanion) &&
+            (!options.backgroundSave || options.saveToGitHub) &&
             options.confirmFilename
           ) {
             pageData.filename =

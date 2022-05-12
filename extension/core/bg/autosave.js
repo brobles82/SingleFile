@@ -25,7 +25,6 @@
 
 import * as config from "./config.js";
 import * as business from "./business.js";
-import * as companion from "./companion.js";
 import * as downloads from "./downloads.js";
 import * as tabsData from "./tabs-data.js";
 import * as ui from "./../../ui/bg/index.js";
@@ -167,50 +166,39 @@ async function saveContent(message, tab) {
     options.tabIndex = tab.index;
     let pageData;
     try {
-      if (options.autoSaveExternalSave) {
-        await companion.externalSave(options);
+      pageData = await getPageData(options, null, null, { fetch });
+      if (options.includeInfobar) {
+        await infobar.includeScript(pageData);
+      }
+      if (options.saveToGitHub) {
+        await (
+          await downloads.saveToGitHub(
+            message.taskId,
+            pageData.filename,
+            pageData.content,
+            options.githubToken,
+            options.githubUser,
+            options.githubRepository
+          )
+        ).pushPromise;
       } else {
-        pageData = await getPageData(options, null, null, { fetch });
-        if (options.includeInfobar) {
-          await infobar.includeScript(pageData);
-        }
-        if (options.saveToGitHub) {
-          await (
-            await downloads.saveToGitHub(
-              message.taskId,
-              pageData.filename,
-              pageData.content,
-              options.githubToken,
-              options.githubUser,
-              options.githubRepository,
-              options.githubBranch
-            )
-          ).pushPromise;
-        } else if (options.saveWithCompanion) {
-          await companion.save({
-            filename: pageData.filename,
-            content: pageData.content,
-            filenameConflictAction: pageData.filenameConflictAction,
-          });
-        } else {
-          const blob = new Blob([pageData.content], { type: "text/html" });
-          pageData.url = URL.createObjectURL(blob);
-          await downloads.downloadPage(pageData, options);
-          if (options.openSavedPage) {
-            const createTabProperties = {
-              active: true,
-              url: URL.createObjectURL(blob),
-              windowId: tab.windowId,
-            };
-            const index = tab.index;
-            try {
-              await browser.tabs.get(tabId);
-              createTabProperties.index = index + 1;
-            } catch (error) {
-              createTabProperties.index = index;
-            }
-            browser.tabs.create(createTabProperties);
+        const blob = new Blob([pageData.content], { type: "text/html" });
+        pageData.url = URL.createObjectURL(blob);
+        await downloads.downloadPage(pageData, options);
+        if (options.openSavedPage) {
+          const createTabProperties = {
+            active: true,
+            url: URL.createObjectURL(blob),
+            windowId: tab.windowId,
+          };
+          const index = tab.index;
+          try {
+            await browser.tabs.get(tabId);
+            createTabProperties.index = index + 1;
+          } catch (error) {
+            createTabProperties.index = index;
           }
+          browser.tabs.create(createTabProperties);
         }
       }
     } finally {

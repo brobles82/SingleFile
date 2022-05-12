@@ -24,7 +24,6 @@
 /* global browser, Blob, URL, document */
 
 import * as config from "./config.js";
-import * as companion from "./companion.js";
 import * as business from "./business.js";
 import * as editor from "./editor.js";
 import {
@@ -110,35 +109,17 @@ async function downloadTabPage(message, tab) {
 
 async function downloadContent(contents, tab, incognito, message) {
   try {
-    if (message.saveToGitHub) {
-      let customUrl = editor.isEditor(tab) ? originalUrl : tab.url;
-      await (
-        await saveToGitHub(
-          message.taskId,
-          message.filename,
-          contents.join(""),
-          message.githubToken,
-          customUrl
-        )
-      ).pushPromise;
-    } else if (message.saveWithCompanion) {
-      await companion.save({
-        filename: message.filename,
-        content: message.content,
-        filenameConflictAction: message.filenameConflictAction,
-      });
-    } else {
-      message.url = URL.createObjectURL(
-        new Blob(contents, { type: MIMETYPE_HTML })
-      );
-      await downloadPage(message, {
-        confirmFilename: message.confirmFilename,
-        incognito,
-        filenameConflictAction: message.filenameConflictAction,
-        filenameReplacementCharacter: message.filenameReplacementCharacter,
-        includeInfobar: message.includeInfobar,
-      });
-    }
+    let customUrl = editor.isEditor(tab) ? originalUrl : tab.url;
+    await (
+      await saveToGitHub(
+        message.taskId,
+        message.filename,
+        contents.join(""),
+        message.githubToken,
+        customUrl
+      )
+    ).pushPromise;
+
     ui.onEnd(tab.id);
     if (message.openSavedPage) {
       const createTabProperties = {

@@ -51,9 +51,6 @@ const insertMetaCSPLabel = document.getElementById("insertMetaCSPLabel");
 const saveToFilesystemLabel = document.getElementById("saveToFilesystemLabel");
 const saveToGitHubLabel = document.getElementById("saveToGitHubLabel");
 const githubTokenLabel = document.getElementById("githubTokenLabel");
-const saveWithCompanionLabel = document.getElementById(
-  "saveWithCompanionLabel"
-);
 const compressHTMLLabel = document.getElementById("compressHTMLLabel");
 const compressCSSLabel = document.getElementById("compressCSSLabel");
 const moveStylesInHeadLabel = document.getElementById("moveStylesInHeadLabel");
@@ -194,9 +191,6 @@ const saveRawPageInput = document.getElementById("saveRawPageInput");
 const insertMetaCSPInput = document.getElementById("insertMetaCSPInput");
 const saveToGitHubInput = document.getElementById("saveToGitHubInput");
 const githubTokenInput = document.getElementById("githubTokenInput");
-const saveWithCompanionInput = document.getElementById(
-  "saveWithCompanionInput"
-);
 const saveToFilesystemInput = document.getElementById("saveToFilesystemInput");
 const compressHTMLInput = document.getElementById("compressHTMLInput");
 const compressCSSInput = document.getElementById("compressCSSInput");
@@ -619,11 +613,6 @@ autoSaveExternalSaveInput.addEventListener(
   () => enableExternalSave(autoSaveExternalSaveInput),
   false
 );
-saveWithCompanionInput.addEventListener(
-  "click",
-  () => enableExternalSave(saveWithCompanionInput),
-  false
-);
 
 browser.runtime
   .sendMessage({ method: "config.isSync" })
@@ -707,9 +696,6 @@ saveToFilesystemLabel.textContent = browser.i18n.getMessage(
 );
 saveToGitHubLabel.textContent = browser.i18n.getMessage("optionSaveToGitHub");
 githubTokenLabel.textContent = browser.i18n.getMessage("optionGitHubToken");
-saveWithCompanionLabel.textContent = browser.i18n.getMessage(
-  "optionSaveWithCompanion"
-);
 compressHTMLLabel.textContent = browser.i18n.getMessage("optionCompressHTML");
 compressCSSLabel.textContent = browser.i18n.getMessage("optionCompressCSS");
 moveStylesInHeadLabel.textContent = browser.i18n.getMessage(
@@ -922,10 +908,9 @@ browser.runtime.sendMessage({ method: "tabsData.get" }).then((allTabsData) => {
 getHelpContents();
 
 async function refresh(profileName) {
-  const [profiles, rules, companionState] = await Promise.all([
+  const [profiles, rules] = await Promise.all([
     browser.runtime.sendMessage({ method: "config.getProfiles" }),
     browser.runtime.sendMessage({ method: "config.getRules" }),
-    browser.runtime.sendMessage({ method: "companion.state" }),
   ]);
   const selectedProfileName =
     profileName || profileNamesInput.value || DEFAULT_PROFILE_NAME;
@@ -1071,9 +1056,7 @@ async function refresh(profileName) {
   saveToGitHubInput.checked = profileOptions.saveToGitHub;
   githubTokenInput.value = profileOptions.githubToken;
   githubTokenInput.disabled = !profileOptions.saveToGitHub;
-  saveWithCompanionInput.checked = profileOptions.saveWithCompanion;
-  saveToFilesystemInput.checked =
-    !profileOptions.saveToGitHub && !profileOptions.saveWithCompanion;
+  saveToFilesystemInput.checked = !profileOptions.saveToGitHub;
   compressHTMLInput.checked = profileOptions.compressHTML;
   compressCSSInput.checked = profileOptions.compressCSS;
   moveStylesInHeadInput.checked = profileOptions.moveStylesInHead;
@@ -1114,7 +1097,6 @@ async function refresh(profileName) {
   autoSaveRepeatDelayInput.value = profileOptions.autoSaveRepeatDelay;
   autoSaveRepeatDelayInput.disabled = !profileOptions.autoSaveRepeat;
   autoSaveExternalSaveInput.checked = profileOptions.autoSaveExternalSave;
-  autoSaveExternalSaveInput.parentElement.hidden = !companionState.enabled;
   removeAlternativeFontsInput.checked = profileOptions.removeAlternativeFonts;
   removeAlternativeImagesInput.checked = profileOptions.removeAlternativeImages;
   groupDuplicateImagesInput.checked = profileOptions.groupDuplicateImages;
@@ -1162,7 +1144,6 @@ async function update() {
       insertMetaCSP: insertMetaCSPInput.checked,
       saveToGitHub: saveToGitHubInput.checked,
       githubToken: githubTokenInput.value,
-      saveWithCompanion: saveWithCompanionInput.checked,
       compressHTML: compressHTMLInput.checked,
       compressCSS: compressCSSInput.checked,
       moveStylesInHead: moveStylesInHeadInput.checked,
