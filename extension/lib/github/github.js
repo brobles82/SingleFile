@@ -54,16 +54,18 @@ async function pushGitHub(token, url, title, content) {
         title: title,
         url: url,
         content: content,
-        token: token,
+        // token: token,
       };
 
-      const endpointUrl = "http://localhost:3000/api/arkwebsite-creation";
+      const endpointUrl = "http://127.0.0.1:3000/api/v1/sfile";
+      // const endpointUrl = "http://localhost:3000/api/arkwebsite-creation";
 
       const response = await fetch(endpointUrl, {
         method: "POST",
         body: JSON.stringify(web),
         headers: {
           "Content-Type": "application/json",
+          Authorization: "Bearer -",
         },
       });
 
